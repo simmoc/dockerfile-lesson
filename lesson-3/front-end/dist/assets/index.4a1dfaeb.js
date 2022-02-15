@@ -1,9 +1,0 @@
-
-/**
- * 由 Fantastic-admin 提供技术支持
- * https://hooray.gitee.io/fantastic-admin/
- * Powered by Fantastic-admin
- * https://hooray.github.io/fantastic-admin/
- */
-    
-import{d as p,_ as i,a as u,b as g,c as d,e as v,f,g as x}from"./contant.2e72a177.js";import{e as y}from"./error.32433a76.js";import{_ as w}from"./plugin-vue_export-helper.21dcd24c.js";import{r as h,a as r,q as a,y as b,L as k,A as c,D as n,J as q}from"./vendor.d2559d84.js";const j={class:"person-item flex flex-align-center"},z={key:0,class:"ml8 user-name mr8"},C=["src"],S={props:{person:{type:Object,default:()=>{}}},setup(m){const e=m,_=s=>{let t={\u7537:"man",\u5973:"women","0":""};return t[s]?new URL({"../../assets/images/customer/email.svg":i,"../../assets/images/customer/error.svg":y,"../../assets/images/customer/link_icon.svg":u,"../../assets/images/customer/man.svg":g,"../../assets/images/customer/no_trend.svg":d,"../../assets/images/customer/ognization.svg":v,"../../assets/images/customer/phone.svg":f,"../../assets/images/customer/women.svg":x}[`../../assets/images/customer/${t[s]}.svg`],self.location).href:""},o=s=>["\u5FAE\u4FE1\u5BA2\u6237","\u5FAE\u4FE1\u7528\u6237","1",1].includes(s)?"\u5FAE\u4FE1":["\u4F01\u4E1A\u5FAE\u4FE1\u5BA2\u6237","2",2].includes(s)?e.person.qw_type_str:"";return(s,t)=>{const l=h("el-avatar");return r(),a("div",j,[b(l,{shape:"square",size:32,src:e.person.pic||k(p)},null,8,["src"]),e.person.yw_name?(r(),a("span",z,c(e.person.yw_name),1)):n("",!0),o(e.person.qw_type)?(r(),a("span",{key:1,class:q(["com-name mr4 fs12",[o(e.person.qw_type)=="\u5FAE\u4FE1"?"text-green":"text-yellow"]])},"@"+c(o(e.person.qw_type)),3)):n("",!0),_(e.person.sex)?(r(),a("img",{key:2,class:"sex-img",src:_(e.person.sex),alt:""},null,8,C)):n("",!0)])}}};var N=w(S,[["__scopeId","data-v-2a7ead6b"]]);export{N as _};
