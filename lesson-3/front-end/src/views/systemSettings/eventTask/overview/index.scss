@@ -1,0 +1,20 @@
+.event-list-page {
+  .search-form-inline {
+    :deep(.el-form-item):nth-child(1) {
+      .el-form-item__label-wrap {
+        margin-left: 0 !important;
+      }
+    }
+  }
+
+  .icon-in-td {
+    width: 22px;
+    height: 22px;
+    text-align: center;
+    display: inline-block;
+    margin-right: 9px;
+    img {
+      width: 100%;
+    }
+  }
+}

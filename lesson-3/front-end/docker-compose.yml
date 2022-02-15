@@ -1,0 +1,19 @@
+version: '3.8' # 表示该 Docker-Compose 文件使用的是 Version 3.8 file
+services:
+  node-builder:
+    image: cimg/node:12.16
+    volumes:
+      - public_data:/data/app
+      - type: bind
+        source: public_data
+  nginx:
+    image: nginx:latest
+    depends_on:
+      - node-builder
+    volumes:
+      - public_data:/var/www
+      - :/etc/nginx/conf.d:ro
+    ports:
+      - "80:80"
+volumes:
+  public_data: {}

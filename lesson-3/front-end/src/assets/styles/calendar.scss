@@ -1,0 +1,233 @@
+.calendar-class{
+    // 一周column
+    #calendar .fc-scrollgrid-section-header .fc-col-header .fc-scrollgrid-sync-inner {
+        // padding-top: 60px;
+        background-color: #FAFAFA;
+        color: #555555;
+        text-align: right;
+        padding: 16px 4px;
+    }
+    #calendar .fc-header-toolbar .fc-toolbar-chunk>div{
+        display: flex;
+        // 上、下时间按钮
+        .fc-prev-button {
+            border: 0;
+            color: rgba(0,0,0,0.85);
+            background-color: #FFFFFF;
+            box-shadow: none !important;
+            outline: 0 !important;
+            &:focus {
+                box-shadow: none !important;
+                outline: 0 !important;
+            }
+            .fc-icon-chevron-left {
+                margin-left: -14px;
+            }
+        }
+        .fc-toolbar-title {
+            border: 0;
+            color: rgba(0,0,0,0.85);
+            background-color: #FFFFFF;
+            font-size: 22px;
+            box-shadow: none !important;
+            outline: 0 !important;
+            &:focus {
+                box-shadow: none !important;
+                outline: 0 !important;
+            }
+        }
+        .fc-next-button {
+            border: 0;
+            color: rgba(0,0,0,0.85);
+            background-color: #FFFFFF;
+            box-shadow: none !important;
+            outline: 0 !important;
+            &:focus {
+                box-shadow: none !important;
+                outline: 0 !important;
+            }
+        }
+    }
+    #calendar .fc-header-toolbar .fc-toolbar-chunk{
+        display: flex;
+        // 定位到今天
+        .fc-today-button {
+            height: 32px;
+            margin: auto;
+            color: #555555;
+            background-color: #ffffff;
+            border: 1px solid #D9D9D9;
+            border-radius: 2px;
+            box-shadow: none !important;
+            outline: 0 !important;
+            opacity: 0.65;
+            &:focus {
+                box-shadow: none !important;
+                outline: 0 !important;
+            }
+        }
+        .fc-button-group {
+            // 企业群发、成员群发、成员单发、朋友圈
+            .fc-task_type_qyqunfa-button {
+                display: flex;
+                align-items: center;
+                border: 0;
+                color: rgba(0,0,0,0.85);
+                background-color: #FFFFFF;
+                &:before{
+                    content: '';
+                    display: inline-block;
+                    width: 14px;
+                    height: 14px;
+                    background-color: #1773fa;
+                    margin-right: 8px;
+                }
+            }
+            // .fc-task_type_cyqunfa-button {
+            //     border: 0;
+            //     color: rgba(0,0,0,0.85);
+            //     background-color: #FFFFFF;
+            //     &:before{
+            //         content: '';
+            //         display: inline-block;
+            //         width: 14px;
+            //         height: 14px;
+            //         background-color: #ff6f00;
+            //         margin-right: 8px;
+            //     }
+            // }
+            .fc-task_type_cydanfa-button {
+                display: flex;
+                align-items: center;
+                border: 0;
+                color: rgba(0,0,0,0.85);
+                background-color: #FFFFFF; 
+                &:before{
+                    content: '';
+                    display: inline-block;
+                    width: 14px;
+                    height: 14px;
+                    background-color: #00c657;
+                    margin-right: 8px;
+                }
+            }
+            .fc-task_type_pyq-button {
+                display: flex;
+                align-items: center;
+                border: 0;
+                color: rgba(0,0,0,0.85);
+                background-color: #FFFFFF;
+                &:before{
+                    content: '';
+                    display: inline-block;
+                    width: 14px;
+                    height: 14px;
+                    background-color: #ffbe00;
+                    margin-right: 8px;
+                }
+            }
+            // 月、周时间选择
+            // 被选中
+            .fc-button-active {
+                color: #ffffff !important;
+                background: #1773fa !important;
+                box-shadow: none !important;
+                outline: 0 !important;
+                &:focus {
+                    box-shadow: none !important;
+                    outline: 0 !important;
+                }
+            }
+            .fc-button-primary:focus {
+                box-shadow: none !important;
+                outline: 0 !important;
+            }
+            .fc-timeGridWeek-button {
+                width: 46px;
+                height: 32px;
+                color: black;
+                border: 1px solid #4a4a4a52;
+                background: #ffffff;
+            }
+            .fc-dayGridMonth-button {
+                width: 46px;
+                height: 32px;
+                color: black;
+                border: 1px solid #4a4a4a52;
+                background: #ffffff;
+            }
+        }
+    }
+    #calendar .fc-view-harness-passive .fc-more-popover .fc-popover-body{
+        height: 400px;
+        overflow-y: scroll;
+        padding-right: 5px;
+    }
+    #calendar .fc-view-harness-passive .fc-scrollgrid-sync-table .fc-day-today {
+        background-color: #e6f7ff !important;
+    }
+    #calendar .fc-view-harness-passive .fc-scrollgrid-section-body .fc-timegrid-cols .fc-day-today {
+        background-color: #e6f7ff !important;
+    }
+    #calendar .check-more-task {
+        font-size: 12px;
+        font-weight: 400;
+        color: #1773fa;
+        line-height: 16px;
+    }
+    // fc-scroller-harness
+    #calendar .fc-view-harness-passive .fc-timeGridWeek-view .fc-scrollgrid .fc-scrollgrid-section-body{
+        // height: 627px;
+        .fc-scroller-harness .fc-daygrid-body-unbalanced .fc-scrollgrid-sync-table .fc-daygrid-day-events{
+            min-height: 65px;
+        }
+        .fc-scroller-harness .fc-timegrid-body{
+            height: 523px;
+            overflow-y: scroll;
+        }
+    }
+    #calendar .fc-view-harness-passive .fc-dayGridMonth-view .fc-scrollgrid-section-body {
+        .fc-scroller-harness .fc-scroller .fc-daygrid-body-unbalanced .fc-scrollgrid-sync-table {
+            height: 606px;
+        }
+    }
+    #calendar .fc-event-title-container {
+        &:hover {
+            cursor: pointer;
+        }
+    }
+    .fc-prev_custom-button, .fc-next_custom-button {
+        background-color: #fff !important;
+        border: 0 !important;
+        color: #000000d9 !important;
+        &:focus {
+            box-shadow: none !important;
+        }
+        &:active {
+            box-shadow: none !important;
+        }
+    }
+
+    .fc-today_customer-button {
+        height: 32px;
+        margin: auto;
+        color: #555555 !important;
+        background-color: #ffffff !important;
+        border: 1px solid #D9D9D9 !important;
+        border-radius: 2px;
+        box-shadow: none !important;
+        outline: 0 !important;
+        opacity: 0.65;
+        &:focus {
+            box-shadow: none !important;
+            outline: 0 !important;
+        }
+        &:active {
+            box-shadow: none !important;
+        }
+    }
+    // 去除日历组件头部吸顶定位
+    .fc .fc-scrollgrid-section-header.fc-scrollgrid-section-sticky > * {
+        position: relative;
+    }
+}

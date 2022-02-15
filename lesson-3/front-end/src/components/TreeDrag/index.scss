@@ -1,0 +1,192 @@
+/**拖拽的动态样式开始 */
+.ghost {
+  border: 1px blue solid;
+}
+
+.flip-list-move {
+  transition: transform 0.5s;
+}
+.no-move {
+  transition: transform 0s;
+}
+/**拖拽的动态样式结束 */
+/** Dialog头部样式 */
+.el-dialog__header {
+  font-size: 19px;
+  font-weight: bold;
+  width: 180px;
+}
+/** Dialog底部按钮 */
+.dialog-footer .btn {
+  height: 32px;
+  width: 92px;
+}
+/** 同步信息样式 */
+.group_name {
+  width: 100% !important;
+  height: 20px;
+  line-height: 20px;
+  margin-bottom: 8px;
+  padding-left: 2px;
+}
+/** Dialog输入框样式 */
+.ipt input {
+  height: 40px !important;
+}
+.tree-group-name{
+  display: inline-block;
+  width: 180px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  word-break: break-all;
+  vertical-align: middle;
+}
+///deep/ .el-dialog {
+//  width: 418px;
+//  min-height: 178px;
+//  padding: 0px;
+//}
+//
+///deep/ .el-dialog__header {
+//  border-bottom: 1px #f0f0f0 solid;
+//  /* padding: 0px; */
+//  padding-left: 24px;
+//  padding-top: 16px;
+//  padding-bottom: 16px;
+//}
+//// /deep/ .el-dialog__header .dialog-titile {
+////   border: solid 1px red;
+//// }
+//
+///deep/ .el-dialog__headerbtn {
+//  top: 17px;
+//}
+//
+///deep/ .el-dialog .new-group-title {
+//  font-weight: bold;
+//  font-size: 16px;
+//  color: #262626;
+//  margin-top: 44px;
+//}
+//
+///deep/ .el-dialog .dialog-body .el-input .el-input__inner {
+//  &::placeholder {
+//    font-family: PingFangSC, PingFangSC-Regular;
+//    font-weight: 400;
+//    color: #909399;
+//    line-height: 14px;
+//  }
+//  height: 40px;
+//}
+///deep/ .el-dialog__body {
+//  border-bottom: 1px #f0f0f0 solid;
+//  padding-bottom: 24px;
+//  padding-left: 24px;
+//  padding-top: 24px;
+//}
+///deep/ .el-dialog__footer {
+//  padding-top: 10px;
+//  text-align: right;
+//  -webkit-box-sizing: border-box;
+//  box-sizing: border-box;
+//  padding-right: 24px;
+//  padding-bottom: 10px;
+//}
+///deep/ .dialog-body .group_name {
+//  width: 100px;
+//  height: 22px;
+//  line-height: 22px;
+//  margin-bottom: 8px;
+//  vertical-align: middle;
+//}
+// Dialog中1px的线
+// .wly-mid {
+//   width: 100%;
+//   display: inline-block;
+//   height: 1px;
+//   margin-top: 12px;
+//   vertical-align: middle;
+//   background-color: #edeef2;
+// }
+// .wly-mid-bottom {
+//   width: 100%;
+//   display: inline-block;
+//   height: 1px;
+//   margin-bottom: 5px;
+//   vertical-align: middle;
+//   background-color: #edeef2;
+// }
+
+.item-class {
+  height: 40px;
+  line-height: 40px;
+  background-color: white;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-left: 12px;
+  padding-right: 12px;
+}
+
+.item-class .item-group-trag-icon {
+  width: 12px;
+  height: 12px;
+  margin-right: 6px;
+  display: inline-block;
+  vertical-align: middle;
+}
+.group_name
+.item-class .right-oper-btn {
+  // float: right;
+  cursor: pointer;
+  margin-right: 12px;
+  // transform: translate(-50%);
+  position: relative;
+}
+.item-class .group-item-blue-radus {
+  display: inline-block;
+  position: absolute;
+  top: 10px;
+  width: 20px;
+  height: 20px;
+  line-height: 20px;
+  opacity: 1;
+  background: #1773fa;
+  border-radius: 50%;
+  right: 36px;
+  color: #fff;
+
+  text-align: center;
+}
+.item-class .group-item-default-radus {
+  background: #999999;
+}
+.right-operate-item {
+  // position: absolute;
+  width: 84px;
+  height: 59px;
+  border: solid 1px #dedede;
+  background: #fff;
+  // z-index: 10;
+}
+.right-operate-item > .play {
+  color: #171717;
+  padding-left: 11px;
+  height: 29.5px;
+  line-height: 29.5px;
+  font-size: 12px;
+}
+.right-operate-item > .play:hover {
+  background: rgba(23, 115, 250, 1);
+  color: #fff;
+}
+.right-operate-additem {
+  color: rgba(23, 115, 250, 1);
+  background: #eef5ff;
+  border-radius: 2px;
+}
+///deep/ .el-popover {
+//  outline: none;
+//}

@@ -1,0 +1,48 @@
+$gender-sprite-boy: (0px, 0px, 0px, 0px, 14px, 14px, 38px, 14px, '@/assets/sprites/gender.png', 'boy');
+$gender-sprite-girl: (24px, 0px, -24px, 0px, 14px, 14px, 38px, 14px, '@/assets/sprites/gender.png', 'girl');
+
+$gender-sprites: (
+	boy: $gender-sprite-boy,
+	girl: $gender-sprite-girl,
+);
+
+@mixin gender-sprite-width($sprite) {
+    width: nth($sprite, 5);
+}
+
+@mixin gender-sprite-height($sprite) {
+    height: nth($sprite, 6);
+}
+
+@mixin gender-sprite-position($sprite) {
+    $sprite-offset-x: nth($sprite, 3);
+    $sprite-offset-y: nth($sprite, 4);
+    background-position: $sprite-offset-x $sprite-offset-y;
+}
+
+@mixin gender-sprite-size($sprite) {
+    background-size: nth($sprite, 7) nth($sprite, 8);
+}
+
+@mixin gender-sprite-image($sprite) {
+    $sprite-image: nth($sprite, 9);
+    background-image: url(#{$sprite-image});
+}
+
+@mixin gender-sprite($name) {
+    @include gender-sprite-image(map-get($gender-sprites, #{$name}));
+    @include gender-sprite-position(map-get($gender-sprites, #{$name}));
+    @include gender-sprite-size(map-get($gender-sprites, #{$name}));
+    @include gender-sprite-width(map-get($gender-sprites, #{$name}));
+    @include gender-sprite-height(map-get($gender-sprites, #{$name}));
+    background-repeat: no-repeat;
+}
+
+@mixin all-gender-sprites() {
+    @each $key, $val in $gender-sprites {
+        $sprite-name: nth($val, 10);
+        .gender-#{$sprite-name}-sprites {
+            @include gender-sprite($key);
+        }
+    }
+}

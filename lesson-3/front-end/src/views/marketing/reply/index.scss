@@ -1,0 +1,126 @@
+/**
+    全局
+*/
+
+/**
+ groupTree 头部
+*/
+
+.content-con .content-main {
+    margin-top: 24px;
+  }
+  .head-bold-title {
+    font-size: 20px;
+    font-family: PingFangSC, PingFangSC-Medium;
+    font-weight: bold !important;
+    color: rgba(0, 0, 0, 0.85);
+  }
+  .left .table-head {
+    margin-top: 24px;
+    height: 32px !important;
+  }
+  .content-main {
+    width: 297px !important;
+    padding-right: 16px;
+    border-right: 1px solid #ebeef5;
+    margin-right: 16px;
+  }
+//   :deep(.tree-head-left .el-input .el-input__inner) {
+//     width: 280px;
+//   }
+  
+  // .search-table-page .page-title-head {
+  //   font-size: 20px;
+  //   font-weight: 500;
+  //   text-align: left;
+  //   color: rgba(0, 0, 0, 0.85);
+  //   line-height: 28px;
+  //   padding-top: 10px;
+  //   padding-bottom: 18px;
+  // }
+  .text-con {
+    height: 30px;
+    line-height: 30px;
+  }
+  // .content-con .content-main {
+  //   display: flex;
+  // }
+  // /**
+  //   树形菜单部分样式
+  //   */
+  
+  // .content-con .content-main .left {
+  //   width: 280px;
+  // }
+  // .content-con .content-main .left {
+  //   width: 280px;
+  // }
+  
+  // // 2px的竖线
+  // .fly-mid {
+  //   display: inline-block;
+  //   height: 65vh;
+  //   width: 2px;
+  //   margin: 0px 12px 0px 12px;
+  //   vertical-align: middle;
+  //   background-color: #edeef2;
+  // }
+  // // 1px的线
+  // .wly-mid {
+  //   width: 100%;
+  //   display: inline-block;
+  //   height: 1px;
+  //   margin-top: 12px;
+  //   vertical-align: middle;
+  //   background-color: #edeef2;
+  // }
+  // .wly-mid-bottom {
+  //   width: 100%;
+  //   display: inline-block;
+  //   height: 1px;
+  //   margin-bottom: 5px;
+  //   vertical-align: middle;
+  //   background-color: #edeef2;
+  // }
+  //文本输入框 样式
+  .search-head-wrap .search-head-left .ipt-type {
+    width: 274px;
+    height: 32px;
+  }
+  
+  // 内容列表展示部分
+  .content-con .flex-column {
+    height: 70%;
+  }
+  .table-head .table-head-left span {
+    font-size: 20px;
+    font-weight: bold;
+  }
+  
+  .el-dialog__header {
+    font-size: 19px;
+    font-weight: bold;
+  }
+  .ipt input {
+    height: 40px !important;
+  }
+  .group_name {
+    width: 60px;
+    height: 20px;
+    line-height: 20px;
+  
+    margin-bottom: 8px;
+    padding-left: 2px;
+  }
+  .dialog-footer .btn {
+    width: 65px;
+    height: 32px;
+  }
+//   :deep(.el-select-dropdown .el-scrollbar .el-select-dropdown__wrap) {
+//     overflow: scroll;
+//     min-height: 180px;
+//   }
+//   :deep(.el-select > .el-select-dropdown) {
+//     transform: translateX(-6px);
+//   }
+  

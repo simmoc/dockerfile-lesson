@@ -1,0 +1,21 @@
+
+.el-calendar-button .el-calendar__header{
+    border-bottom: 0;
+}
+.el-tabs-button .el-tabs__header{
+    margin: 0;
+    margin-top: 11px;
+    margin-bottom: 13px;
+}
+.el-calendar-button thead{
+    height: 54px;
+    background-color: rgba(0,0,0,0.02);
+}
+.el-calendar-button .el-calendar-day{
+    overflow: visible;
+}
+
+.el-calendar-button .el-calendar-table tr td:first-child {
+    overflow: visible;
+    position: relative;
+}

@@ -1,0 +1,9 @@
+
+/**
+ * 由 Fantastic-admin 提供技术支持
+ * https://hooray.gitee.io/fantastic-admin/
+ * Powered by Fantastic-admin
+ * https://hooray.github.io/fantastic-admin/
+ */
+    
+.dataSync-content[data-v-a0b85578]{width:520px;display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-box-pack:justify;-webkit-justify-content:space-between;-ms-flex-pack:justify;justify-content:space-between;border:1px solid #d9d9d9;padding:14px 12px;margin-bottom:8px;height:60px;-webkit-box-align:center;-webkit-align-items:center;-ms-flex-align:center;align-items:center}.icon[data-v-a0b85578]{font-size:19px;vertical-align:middle}.sync-btn[data-v-a0b85578]{width:146px;height:32px;background:#ffffff;border:1px solid #1773FA;border-radius:2px;color:#1773fa;text-align:center;padding:4px 18px;cursor:pointer}.sync-btn[data-v-a0b85578]:hover{background-color:#e8f1ff}.sync-btn.department-disabled[data-v-a0b85578],.sync-btn.customer-disabled[data-v-a0b85578],.sync-btn.group-disabled[data-v-a0b85578]{cursor:not-allowed;color:#d9d9d9;border-color:#d9d9d9}.sync-btn.department-disabled[data-v-a0b85578]:hover,.sync-btn.customer-disabled[data-v-a0b85578]:hover,.sync-btn.group-disabled[data-v-a0b85578]:hover{background-color:#fff}.loading[data-v-a0b85578],.group-loading[data-v-a0b85578],.customer-loading[data-v-a0b85578],.department-loading[data-v-a0b85578]{-webkit-animation:rotating 2s linear infinite;animation:rotating 2s linear infinite}

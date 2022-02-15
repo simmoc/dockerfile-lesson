@@ -1,0 +1,21 @@
+.custom-subject-el-select .el-input--mini .el-input__inner {
+  padding-left: 38px;
+}
+.select-empty.custom-subject-el-select .el-input--mini .el-input__inner {
+  padding-left: 15px;
+}
+.custom-subject-el-select .el-input--prefix .el-input__inner {
+  padding-left: 38px !important;
+}
+.custom-subject-el-select-input-icon,
+.custom-subject-option .custom-subject-option-img-wrap {
+  width: 20px;
+  height: 100%;
+  img {
+    width: 20px;
+  }
+}
+.custom-subject-el-select-input-icon {
+  margin-left: 8px;
+  margin-right: 8px;
+}

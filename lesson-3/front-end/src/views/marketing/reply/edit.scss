@@ -1,0 +1,79 @@
+.head-content {
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    padding-left: 24px;
+    padding-right: 24px;
+    height: 60px;
+    line-height: 60px;
+    display: flex;
+    justify-content: flex-start;
+  }
+  .head-bold-title {
+    font-size: 20px;
+    font-family: PingFangSC, PingFangSC-Medium;
+    font-weight: bold !important;
+    color: rgba(0, 0, 0, 0.85);
+  }
+  .head-content .head-content-item {
+    margin-right: 32px;
+  }
+
+  .search-head-wrap {
+    width: 100%;
+    height: 82vh;
+  }
+  .search-head-wrap > .demo-ruleForm {
+    width: 520px;
+  }
+  .form-ipt-style {
+    width: 520px;
+    height: 32px !important;
+  }
+  .item-button {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .el-form-item__label {
+    padding-bottom: 4px;
+    opacity: 0.85;
+    font-size: 14px;
+    font-family: PingFangSC, PingFangSC-Regular;
+    font-weight: 400;
+    color: #000000;
+  }
+  .el-form-item__label::before {
+    content: '*';
+    color: #ff3b34;
+    font-size: 14px;
+    font-weight: 400;
+  }
+  .el-form-item__label .el-form-item_label-span {
+    width: 110px;
+    opacity: 0.85;
+    font-size: 12px;
+    font-family: PingFangSC, PingFangSC-Regular;
+    font-weight: 400;
+    text-align: left;
+    color: #909399;
+    padding-left: 8px;
+  }
+  .enter-icon-show {
+    float: right;
+    padding-right: 20px;
+    color: #8492a6;
+    font-size: 13px;
+  }
+  .select-dropdow-item-enter {
+    position: absolute;
+    top: 4px;
+    right: 10px;
+    font-size: 12px;
+    font-family: PingFangSC, PingFangSC-Regular;
+    font-weight: 400;
+    text-align: center;
+  }
+  .select-dropdow-item-enter .enter-icon-show {
+    margin-top: 1px;
+    padding: 0px;
+  }

@@ -1,0 +1,42 @@
+pipeline {
+  agent any
+  stages {
+    stage('检出') {
+      steps {
+        checkout([
+          $class: 'GitSCM',
+          branches: [[name: GIT_BUILD_REF]],
+          userRemoteConfigs: [[
+            url: GIT_REPO_URL,
+            credentialsId: CREDENTIALS_ID
+          ]]])
+        }
+      }
+      stage('更新node版本') {
+        steps {
+          sh '''echo \'更新node版本中...\'
+npm install -g n
+n 12.22.5
+node -v
+echo \'更新node版本完成.\'
+'''
+        }
+      }
+      stage('安装依赖') {
+        steps {
+          sh 'yarn install'
+        }
+      }
+      stage('编译') {
+        steps {
+          sh 'yarn build:prod'
+        }
+      }
+      stage('构建镜像并推送到 CODING Docker 制品库') {
+        steps {
+          sh "docker build -t ${CODING_DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_VERSION} -f ${DOCKERFILE_PATH} ${DOCKER_BUILD_CONTEXT}"
+          useCustomStepPlugin(key: 'coding-public:artifact_docker_push', version: 'latest', params: [image:"${CODING_DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_VERSION}",repo:'we-customer-admin-yoozi',properties:'[]'])
+        }
+      }
+    }
+  }
