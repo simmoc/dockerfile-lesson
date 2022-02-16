@@ -195,20 +195,14 @@ async function  beforeUpload(file) {
     }
     const isTypeOk = props.ext.indexOf(fileExt) >= 0
     const isSizeOk = file.size / 1024 / 1024 < props.size
-    console.log('isTypeOk', props.ext, fileExt, props.type)
-    if (props.type == '图片') {
-        if (!isTypeOk) {
-            proxy.$message.error(`上传图片只支持 ${ props.ext.join(' / ') } 格式！`)
-        }
-        if (!isSizeOk) {
-            proxy.$message.error(`上传图片大小不能超过 ${props.size}MB！`)
-        }
+    if (!isTypeOk) {
+        proxy.$message.error(`上传图片只支持 ${ props.ext.join(' / ') } 格式！`)
+    }
+    if (!isSizeOk) {
+        proxy.$message.error(`上传图片大小不能超过 ${props.size}MB！`)
     }
     
     if (props.type === '视频') {
-        if (!isTypeOk) {
-            proxy.$message.error(`上传视频只支持 ${ props.ext.join(' / ') } 格式！`)
-        }
         let isTimeOk = await getVideoTime(file)
         // console.log('isTimeOk', isTimeOk, 'isTypeOk', isTypeOk, 'isSizeOk', isSizeOk)
         if (!isTimeOk) {
@@ -264,9 +258,9 @@ async function uploadImg() {
 function getVideoTime(file) {
     return new Promise(resolve => {
         let url = URL.createObjectURL(file)
-        // console.error('3333', url)
+        console.error('3333', url)
         let audioElement = new Audio(url)
-        // console.error('4444', audioElement)
+        console.error('4444', audioElement)
         audioElement.addEventListener('loadedmetadata', () => {
             let duration = parseInt(audioElement.duration)
             console.log('秒数', duration)

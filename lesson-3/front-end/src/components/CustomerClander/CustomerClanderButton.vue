@@ -262,7 +262,7 @@
 <script setup>
 import CustomerDialog from '@/components/CustomerDialog/index.vue'
 import ImageUpload from '@/components/CalanderImageUpload/calanderImageUpload.vue'
-import { watch, nextTick } from 'vue'
+import { watch, defineProps, defineExpose, nextTick } from 'vue'
 import { ElMessage } from 'element-plus'
 import vxRule from '@/util/formValidate'
 

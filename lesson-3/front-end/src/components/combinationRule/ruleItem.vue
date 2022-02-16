@@ -143,8 +143,8 @@
             "
             class="rule-box-number-range"
         >
-            <!-- {{ reacData.newRuleItem.params[0] + '—' }}
-            {{ reacData.newRuleItem.params[1] + '—' }} -->
+            <!-- {{ reacData.newRuleItem.params[0] + '--' }}
+            {{ reacData.newRuleItem.params[1] + '--' }} -->
             <el-input-number
                 v-model="reacData.newRuleItem.params[0]"
                 placeholder="请输入"

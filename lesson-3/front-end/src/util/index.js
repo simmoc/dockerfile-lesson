@@ -157,7 +157,6 @@ export const getRuleDatetime = function(type, rule_per_circle, rule_data, begin_
     }
     console.log('正则测试', reg.test(rule_per_circle))
     if (!reg.test(rule_per_circle) && rule_per_circle != '') {
-    // if (rule_per_circle < 1 && rule_per_circle != '') {
         ElMessage.warning({
             message: '请填写正确间隔时长!'
         })
@@ -270,39 +269,4 @@ export const getRuleDatetime = function(type, rule_per_circle, rule_data, begin_
         }
     }
     return result_datetime_array
-}
-
-/**
-*
-* 获取字符串的长度
-* @param str 字符串
-*
-* */
-export const getStrLength = str => {
-    let len = str.length
-    let realLen = 0
-    let charCode = -1
-    for (let i = 0; i < len; i++) {
-        charCode = str.charCodeAt(i)
-        if (charCode >= 0 && charCode <= 128) {
-            realLen += 1
-        } else {
-            realLen += 2
-        }
-    }
-    return realLen
-}
-
-/**
-*
-* 获取字符串的宽度
-* @param text 字符串
-* @param font 字符串 The css font descriptor that text is to be rendered with (e.g. "bold 14px verdana")
-* */
-export const getTextWidth = text => {
-    let canvas = getTextWidth.canvas || (getTextWidth.canvas = document.createElement('canvas'))
-    let context = canvas.getContext('2d')
-    context.font = '14px Helvetica'
-    let metrics = context.measureText(text)
-    return metrics.width
 }

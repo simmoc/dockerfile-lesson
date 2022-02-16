@@ -11,33 +11,12 @@
                     />
                 </el-form-item>
                 <el-form-item label="群主选择" prop="members">
-                    <selectMember
-                        ref="addMemberDialogRef"
-                        input-placeholder="请选择企微成员"
-                        :is-group="true"
-                        :is-multiple-selected="true"
-                        :custom-input-value-fn="customInputValueFn"
-                        :custom-selected-fn="customSelectedFn"
-                        style="width: 200px"
-                        @confirm="confirmChooseMember"
-                    >
-                        <template #default="scope">
-                            <span>
-                                <el-input
-                                    v-model="scope.data"
-                                    placeholder="请选择"
-                                    suffix-icon="el-icon-caret-bottom"
-                                    readonly
-                                />
-                            </span>
-                        </template>
-                    </selectMember>
-                    <!-- <MemberTransfer 
+                    <MemberTransfer 
                         ref="checkClear"
                         :title="'群主'"
                         :members="handleReset"
                         @selectedList="addSelectedList"
-                    /> -->
+                    />
                 </el-form-item>
                 <el-form-item label="创建时间" prop="addDate">
                     <el-date-picker
@@ -69,18 +48,7 @@
                     <el-button type="text" @click="handleDetail(scope.data.chat_id)">
                         {{ scope.data.group_name }}
                     </el-button>
-                </template>
-                <template #group_leader="scope">
-                    <div class="flex flex-align-center color-primary">
-                        <MenberItem 
-                            class="table-member-card"
-                            :member-id="scope.data.member_id" 
-                            :avatar="scope.data.group_leader_avatar"
-                            :name="scope.data.group_leader"
-                            :department-name="scope.data.group_leader_department"
-                        />
-                    </div>  
-                </template>       
+                </template>            
             </CustomerTable> 
             <!-- 分页 -->
             <customer-pagination
@@ -96,14 +64,12 @@
 import http from '@/util/request'
 import { useRouter } from 'vue-router'
 import { reactive } from 'vue'
-import { ElMessage } from 'element-plus'
 const router = useRouter()
 const form = reactive({
     formData: {
         page: 1,
         page_size: 10,
-        search_department_id_arr: [], // 部门
-        search_member_id_arr: [] // 成员
+        members: []
     },
     tableData: [],
     totalDataNum: 0,
@@ -120,8 +86,7 @@ const form = reactive({
         },
         {
             label: '群主',
-            prop: 'group_leader',
-            type: 'slot'
+            prop: 'group_leader'
         },
         {
             label: '创建时间',
@@ -129,33 +94,8 @@ const form = reactive({
         }
     ]
 })
-// const checkClear = ref(null)
-const addMemberDialogRef = ref(null)
-function customInputValueFn(param) {
-    return getShowStr(param, 3) || ''
-}
-function getShowStr(arr, len) {
-    return `${arr
-        .slice(0, len)
-        .map(ele => ele['member_name'] || ele['department_name'])
-        .join('，')}${arr.length > len ? '...' : ''}`
-}
-function customSelectedFn(data, len) {
-    const maxLen = 200
-    if (len >= maxLen) {
-        ElMessage({
-            message: `最多支持客户人数${maxLen}人`,
-            type: 'error'
-        })
-        return false
-    } else {
-        return true
-    }
-}
+const checkClear = ref(null)
 function handleSubmit() {
-    if (addMemberDialogRef.value) {
-        addMemberDialogRef.value.dialogVisible = false
-    }
     form.formData.page = 1
     form.formData.page_size = 10
     getList()
@@ -171,8 +111,8 @@ function getList() {
         .catch(() => {})
 }
 function handleReset() {
-    // checkClear.value.clearSearch()
-    addMemberDialogRef.value.resetSelect()
+    checkClear.value.clearSearch()
+    form.formData.members = []
     form.formData = {
         page: 1,
         page_size: 10
@@ -194,20 +134,8 @@ function handleChangeDate(arr = []) {
     form.formData.end_time = arr[1]
 }
 // 搜索添加群主成员
-function confirmChooseMember(selectedList) {
-    const departmentArr = []
-    const memberArr = []
-    for (let i = 0;i < selectedList.length;i++) {
-        const data = selectedList[i]
-        if (data.type == 'MEMBER') {
-            memberArr.push(data.id)
-        } else {
-            departmentArr.push(data.id)
-        }
-    }
-
-    form.formData.search_department_id_arr = departmentArr
-    form.formData.search_member_id_arr = memberArr
+function addSelectedList(selectedList) {
+    form.formData.members = selectedList
 }
 </script>
 

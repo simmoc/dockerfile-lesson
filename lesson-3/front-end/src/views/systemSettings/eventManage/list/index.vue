@@ -175,7 +175,7 @@ import Http from '@/util/request.js'
 import { onMounted, reactive } from 'vue-demi'
 import { useRouter, useRoute } from 'vue-router'
 function getImageUrl(url) {
-    return new URL(`../../../../assets/images/eventManage/${url}.svg`, import.meta.url).href
+    return new URL(`../../../../assets/images/eventManage/${url}.png`, import.meta.url).href
 }
 // --------变量申明-----------------
 const router = useRouter()

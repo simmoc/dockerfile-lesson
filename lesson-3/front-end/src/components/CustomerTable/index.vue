@@ -1,19 +1,16 @@
 <template>
-    <div class="customer-table">
+    <div>
         <el-table
             ref="customerTable"
-            v-loading="loading" 
-            :header-cell-style="{background:'#f4f4f5'}"
+            v-loading="loading" :header-cell-style="{background:'#f4f4f5'}"
             size="small"
             tooltip-effect="dark"
             :data="tableData"
-            :max-height="maxHeight"
             :height="height"
-            style="width: 100%;margin-bottom: 16px;margin-top: 16px;"
+            style="width: 100%;margin-bottom: 24px;margin-top: 24px;"
             :summary-method="getSummaries"
             :show-summary="showSummary"
             :empty-text="emptyText"
-            :row-key="getRowKeys"
             @selection-change="handleSelectionChange"
         >
             <el-table-column v-if="needIndex"
@@ -28,7 +25,6 @@
                 type="selection"
                 width="55"
                 :selectable="checkSelectable"
-                :reserve-selection="reserveSelection"
             />
             <el-table-column
                 v-for="(item,index) in tableTitle"
@@ -36,35 +32,19 @@
                 :prop="item.prop" :label="item.label"
                 :header-align="headerAlign"
                 :align="align"
-                :fixed="item.fixed"
                 :width="item.width"
-                :min-width="item.minWidth"
             >
                 <template v-if="item.cusHeader" #header="scope">
                     <slot :name="item.prop" :data="scope.row" />
                 </template>
                 <template #default="scope">
                     <!-- slot-->
-                    <slot v-if="item.type==='slot'" :name="item.prop" :data="scope.row" :width="item.width" />
+                    <slot v-if="item.type==='slot'" :name="item.prop" :data="scope.row" />
                     <!-- button-->
                     <div v-else-if="item.type==='button'">
                         <el-button type="text " @click="getClick(scope.row,item.prop)">
                             {{ scope.row[item.prop] }}
                         </el-button>
-                    </div>
-
-                    <div v-else-if="item.type === 'tooltip'">
-                        <template v-if="scope.row[item.prop]">
-                            <span v-if="getTextWidth(scope.row[item.prop]) < item.width - 20">
-                                {{ scope.row[item.prop] }}
-                            </span>
-                            <el-tooltip v-else :content="scope.row[item.prop]" placement="bottom" effect="light">
-                                <span class="overflow-ellipsis" style="display: inline-block; width: 100%;">{{ scope.row[item.prop] }}</span>
-                            </el-tooltip>
-                        </template>
-                        <template v-else>
-                            <div>--</div>
-                        </template>
                     </div>
 
                     <!-- popover-->
@@ -90,7 +70,6 @@
 </template>
 
 <script setup>
-import { getTextWidth } from '@/util'
 const props = defineProps({
     /*
       * 表格头
@@ -162,33 +141,19 @@ const props = defineProps({
         type: Function,
         default: null
     },
-    maxHeight: {
-        type: [String, Number],
-        default: null
-    },
-    height: {
-        type: [String, Number],
-        default: null
-    },
     // 内容为空的文本
     emptyText: {
         type: String,
         default: '暂无数据'
     },
-    // 复选框回显保留数据
-    reserveSelection: {
-        type: Boolean,
-        default: false
-    },
-    // 使用复选，考虑回显，传的key
-    rowKey: {
+    height: {
         type: String,
-        default: ''
+        default: null
     }
 })
 const customerTable = ref(null)
 const selecteList = ref([])
-defineExpose({ clearTableSelect, selecteList, handleToggleRowSelection })
+defineExpose({ clearTableSelect, selecteList })
 
 const emit = defineEmits(['handleClick', 'handleSelect'])
 function typeIndex(index) {
@@ -201,25 +166,13 @@ function handleSelectionChange(data) {
     selecteList.value = data
     emit('handleSelect', data)
 }
-// 切换当前列选中
-function handleToggleRowSelection(row, select) {
-    customerTable.value.toggleRowSelection(row, select)
-}
 function clearTableSelect() {
     customerTable.value.clearSelection()
-}
-function getRowKeys(row) {
-    return row.id
 }
 
 </script>
 
 <style scoped lang="scss">
-    .customer-table {
-        :deep(.el-table thead) {
-            height: 54px;
-        }
-    }
     .el-table{
         color:$customer-text-color;
     }

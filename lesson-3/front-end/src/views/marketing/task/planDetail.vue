@@ -32,7 +32,7 @@
                                         :left-title="item.tag_group_name"
                                         :right-title="item.name"
                                         :color="item.tag_type === 'HQ' ? '#409eff' : '#FF6F00'"
-                                        :customer-style="{ 'margin-bottom': 0 }"
+                                        :customer-style="{ 'margin-bottom': '10px' }"
                                     />
                                 </div>
                                 <el-popover
@@ -72,9 +72,48 @@
                                     </template>
                                 </el-popover>
                             </label>
-                            <label class="textClass ml32 flex flex-align-center pointer">
+                            <label class="textClass ml32 flex flex-align-center">
                                 <div>成员：</div>
-                                <el-button class="show-member" type="primary" @click="membersDialogVisible = true">查看成员列表</el-button>
+                                <span v-if="memberData.length === 0"> -- </span>
+                                <span v-else-if="0 < memberData.length && memberData.length <= 3" class="event-list-page">
+                                    <span v-for="(item, index) in memberData" :key="index">
+                                        <div class="icon-in-td">
+                                            <img 
+                                                v-if="item.qw_thumb_avatar"
+                                                :src="item.qw_thumb_avatar"
+                                                :alt="item.qw_thumb_avatar"
+                                            >
+                                        </div>
+                                        <span class="cl-blue member-name">
+                                            {{ item.member_name }} / {{ item.parent_name }}
+                                        </span>
+                                    </span>
+                                </span>
+                                <el-popover 
+                                    v-else
+                                    width="400"
+                                    trigger="click"
+                                >
+                                    <memberCheck
+                                        :member-data="memberData"
+                                    />
+                                    <template #reference>
+                                        <span class="event-list-page">
+                                            <span v-for="(item, index) in memberThree" :key="index">
+                                                <div class="icon-in-td">
+                                                    <img 
+                                                        v-if="item.qw_thumb_avatar"
+                                                        :src="item.qw_thumb_avatar"
+                                                        :alt="item.qw_thumb_avatar"
+                                                    >
+                                                </div>
+                                                <span class="cl-blue member-name">
+                                                    {{ item.member_name }} / {{ item.parent_name }} ...
+                                                </span>
+                                            </span>
+                                        </span>
+                                    </template>
+                                </el-popover>
                             </label>
                         </div>
                     </div>
@@ -150,9 +189,47 @@
                             </label>
                         </div>
                         <div v-if="PlanDetailData.receive_type == '1'" class="mt16">
-                            <label class="textClass flex flex-align-center pointer">
+                            <label class="textClass">
                                 成员(群主)筛选：
-                                <el-button class="show-member" type="primary" @click="membersDialogVisible = true">查看成员列表</el-button>
+                                <span v-if="0 < memberData.length && memberData.length <= 3" class="event-list-page">
+                                    <span v-for="(item, index) in memberData" :key="index">
+                                        <div class="icon-in-td">
+                                            <img 
+                                                v-if="item.qw_thumb_avatar"
+                                                :src="item.qw_thumb_avatar"
+                                                :alt="item.qw_thumb_avatar"
+                                            >
+                                        </div>
+                                        <span class="cl-blue member-name">
+                                            {{ item.member_name }} / {{ item.parent_name }}
+                                        </span>
+                                    </span>
+                                </span>
+                                <el-popover 
+                                    v-else
+                                    width="400"
+                                    trigger="click"
+                                >
+                                    <memberCheck
+                                        :member-data="memberData"
+                                    />
+                                    <template #reference>
+                                        <span class="event-list-page">
+                                            <span v-for="(item, index) in memberThree" :key="index">
+                                                <div class="icon-in-td">
+                                                    <img 
+                                                        v-if="item.qw_thumb_avatar"
+                                                        :src="item.qw_thumb_avatar"
+                                                        :alt="item.qw_thumb_avatar"
+                                                    >
+                                                </div>
+                                                <span class="cl-blue member-name">
+                                                    {{ item.member_name }} / {{ item.parent_name }} ...
+                                                </span>
+                                            </span>
+                                        </span>
+                                    </template>
+                                </el-popover>
                             </label>
                         </div>
                     </div>
@@ -239,7 +316,7 @@
                                     :left-title="item.tag_group_name"
                                     :right-title="item.name"
                                     :color="item.tag_type === 'HQ' ? '#409eff' : '#FF6F00'"
-                                    :customer-style="{ 'margin-bottom': 0 }"
+                                    :customer-style="{ 'margin-bottom': '10px' }"
                                 />
                             </div>
                             <el-popover
@@ -279,9 +356,48 @@
                                 </template>
                             </el-popover>
                         </div>
-                        <div class="textClass ml32 flex flex-align-center pointer">
+                        <div class="textClass ml32 flex flex-align-center">
                             <div>成员：</div>
-                            <el-button class="show-member" type="primary" @click="membersDialogVisible = true">查看成员列表</el-button>
+                            <div v-if="memberData.length === 0"> -- </div>
+                            <div v-else-if="0 < memberData.length && memberData.length <= 3" class="event-list-page">
+                                <span v-for="(item, index) in memberData" :key="index">
+                                    <div class="icon-in-td">
+                                        <img 
+                                            v-if="item.qw_thumb_avatar"
+                                            :src="item.qw_thumb_avatar"
+                                            :alt="item.qw_thumb_avatar"
+                                        >
+                                    </div>
+                                    <span class="cl-blue member-name">
+                                        {{ item.member_name }} / {{ item.parent_name }}
+                                    </span>
+                                </span>
+                            </div>
+                            <el-popover 
+                                v-else
+                                width="400"
+                                trigger="click"
+                            >
+                                <memberCheck
+                                    :member-data="memberData"
+                                />
+                                <template #reference>
+                                    <span class="event-list-page">
+                                        <span v-for="(item, index) in memberThree" :key="index">
+                                            <div class="icon-in-td">
+                                                <img 
+                                                    v-if="item.qw_thumb_avatar"
+                                                    :src="item.qw_thumb_avatar"
+                                                    :alt="item.qw_thumb_avatar"
+                                                >
+                                            </div>
+                                            <span class="cl-blue member-name">
+                                                {{ item.member_name }} / {{ item.parent_name }} ...
+                                            </span>
+                                        </span>
+                                    </span>
+                                </template>
+                            </el-popover>
                         </div>
                     </div>
                     <div class="mt24">
@@ -354,11 +470,6 @@
                 </div>
             </div>
         </page-main>
-        <memberCheck 
-            :id="memberData.id" 
-            :visible="membersDialogVisible"
-            @on-close="membersDialogVisible = false"
-        />
     </div>
 </template>
 
@@ -379,14 +490,12 @@ const repeatDate = ref([])
 // 文本数据处理
 const content_arr = ref([])
 // 成员数据
-const memberData = ref({})
+const memberData = ref([])
 // 成员数量大于三出省略号点击
-// const memberThree = ref([])
+const memberThree = ref([])
 // 回显Tag数据
 const selectList = ref ([])
 const PlanDetailData = ref({})
-// 多成员列表显示
-const membersDialogVisible = ref(false)
 const isEdit = ref(false)
 function goImplement(id) {
     // 只有执行中、已结束状态任务可以看到按钮，点击跳转
@@ -422,16 +531,14 @@ const planDetailInfo = async id => {
             selectList.value = PlanDetailData.value.receive_group[0].tag_arr
         }
         if (PlanDetailData.value.receive_group[0].select_members_info) {
-            memberData.value = PlanDetailData.value.receive_group[0]
-            // memberData.value = PlanDetailData.value.receive_group[0].select_members_info
-
-            // console.log('memberData.value', memberData.value)
-            // if (memberData.value.length > 3) {
-            //     memberThree.value = memberData.value.slice(0, 3)
-            // }
+            memberData.value = PlanDetailData.value.receive_group[0].select_members_info
+            console.log('memberData.value', memberData.value)
+            if (memberData.value.length > 3) {
+                memberThree.value = memberData.value.slice(0, 3)
+            }
         }
     }
-    // console.log('memberThree', memberThree.value)
+    console.log('memberThree', memberThree.value)
     // 处理知识内容数据
     content_arr.value = mediaResFormat(data)
 
@@ -646,27 +753,5 @@ function repeatWeek(date) {
     white-space: nowrap;
     color: #409eff;
     vertical-align: middle;
-}
-.member-card {
-    @include text-overflow(1, true);
-    display: inline-block;
-    width: auto;
-    margin-right: 12px;
-}
-.members-content {
-    max-width: 450px;
-    @include text-overflow(1, true);
-
-    .member-header {
-        width: 32px;
-        height: 32px;
-    }
-}
-.show-member {
-    width: 116px;
-    min-height: 32px !important;
-    line-height: 32px;
-    border: 0;
-    padding: 0;
-}
+  }
 </style>

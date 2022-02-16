@@ -4,13 +4,13 @@
             <el-row class="flex">
                 <!-- 日历 -->
                 <el-col :span="17">
-                    <div class="calendar-class">
+                    <div class="calendar-class mr24">
                         <div id="calendar" />
                     </div>
                 </el-col>
 
                 <!-- 任务总览 -->
-                <el-col class="task-check pl24" :span="7">
+                <el-col class="task-check" :span="7">
                     <div class="mb24 btn-class">
                         <!-- <el-button type="primary" size="small" @click="goManualTask">
                             <i class="el-icon-plus mr10" />
@@ -51,8 +51,8 @@
                                     <div v-if="tabsListData.length !== 0" class="scroll-bar">
                                         <div v-for="item in tabsListData" :key="item.id" class="tab-content m8 pl16 pt10 pb10 pr16 flex flex-justify-between flex-align-center">
                                             <div>
-                                                <div class="content-title mb8 pointer" @click="goDetail(item.id)">{{ item.name }}</div>
-                                                <div class="flex flex-align-center mr14 mb4 flex-justify-between">
+                                                <div class="content-title pointer" @click="goDetail(item.id)">{{ item.name }}</div>
+                                                <div class="flex flex-align-center mr14 flex-justify-between">
                                                     <div class="flex-1 flex flex-align-center">
                                                         <img 
                                                             :src="getImageUrl('taskStatus')" 
@@ -235,8 +235,6 @@ const tabsForm = ref({
     page: '1',
     page_size: '10'
 })
-const startTime = ref('')
-const endTime = ref('')
 const task_type = ref('1,2,3,4,5')
 let calendarOptions = {
     height: 'auto',
@@ -262,39 +260,6 @@ let calendarOptions = {
         // date_title: {
         //     text: moment().format('yyyy-MM-DD')
         // },
-        prev_custom: {
-            icon: 'chevron-left',
-            click: () => {
-                calendar.value.prev()
-                // console.log('上一页', calendar.value.currentData, calendar.value.currentData.currentDate)
-                
-                startTime.value = showStartTime(calendar.value.currentData.currentDate)
-                endTime.value = showEndTime(calendar.value.currentData.currentDate)
-                // handleStatus('1', true)
-                getTaskList()
-            }
-        },
-        next_custom: {
-            icon: 'chevron-right',
-            click: () => {
-                calendar.value.next()
-                // console.log('下一页', calendar.value.currentData.currentDate)
-                startTime.value = showStartTime(calendar.value.currentData.currentDate)
-                endTime.value = showEndTime(calendar.value.currentData.currentDate)
-                // handleStatus('1', true)
-                getTaskList()
-            }
-        },
-        // 自定义回到今天按钮
-        today_customer: {
-            text: '定位到今天',
-            click: () => {
-                calendar.value.today()
-                startTime.value = showStartTime(calendar.value.currentData.currentDate)
-                endTime.value = showEndTime(calendar.value.currentData.currentDate)
-                getTaskList()
-            }
-        },
         task_type_qyqunfa: {
             text: '企业群发',
             click: function() {
@@ -324,7 +289,7 @@ let calendarOptions = {
         today: '定位到今天'
     },
     headerToolbar: {
-        left: 'prev_custom,title,next_custom today_customer',
+        left: 'prev,title,next today',
         right: 'task_type_qyqunfa,task_type_cydanfa,task_type_pyq dayGridMonth,timeGridWeek'
     },
     dayMaxEventRows: 3,
@@ -358,21 +323,14 @@ let calendarOptions = {
 const tabsListData = ref([])
 const eventList = ref([])
 const addListener = ref(null)
-const calendar = ref(null)
 onBeforeUnmount(() => {
     addListener.value = null
 })
 onMounted(() => {
-    startTime.value = showStartTime()
-    endTime.value = showEndTime()
     const calendarEl = document.getElementById('calendar')// 获取这个节点
-    calendar.value = new Calendar(calendarEl, calendarOptions)
-    calendar.value.render()
-
-    // var calendar = new Calendar(calendarEl, calendarOptions)
-    // calendar.render()
+    var calendar = new Calendar(calendarEl, calendarOptions)
+    calendar.render()
     handleStatus('1', true)
-    getTaskList(true)
 
     // calendarEl.addEventListener('resize', e => {
     //     console.log('eeeee', e)
@@ -383,14 +341,8 @@ onMounted(() => {
 function renderCal() {
     const calendarEl = document.getElementById('calendar')// 获取这个节点
     calendarOptions.events = eventList.value
-    calendar.value = new Calendar(calendarEl, calendarOptions)
-    calendar.value.render()
-    // 解决第一次渲染时 ，日历组件宽度计算错误问题
-    setTimeout(() => {
-        calendar.value.today()
-    }, 500)
-    // var calendar = new Calendar(calendarEl, calendarOptions)
-    // calendar.render()
+    var calendar = new Calendar(calendarEl, calendarOptions)
+    calendar.render()
 }
 // 获取切图
 function getImageUrl(name) {
@@ -411,7 +363,6 @@ const switchTab = (e, more) => {
 }
 
 // tablist接口
-// 请求任务列表（右边）
 const handleStatus = async(e, more) => {
     let res = await Http.taskTabList({
         execute_status: e,
@@ -429,58 +380,13 @@ const handleStatus = async(e, more) => {
     if (res.code === 200) {
         refreshLoad.value = false
     }
-    // // console.log('tabsListData', tabsListData.value)
-    // let ret = await Http.calendarData({
-    //     // start_time: showStartTime(),
-    //     // end_time: showEndTime(),
-    //     start_time: startTime.value,
-    //     end_time: endTime.value,
-    //     type: task_type.value
-    // })
-    // if (eventList.value.length > 0) {
-    //     eventList.value = []
-    // }
-    // ret.data.forEach(e => {
-    //     // console.log('eeeee', e)
-    //     let all_day_bool = ((moment(e.end_time).unix() - 1) - (moment(e.start_time).unix() - 1)) <= 86400
-    //     var event = {
-    //         id: e.id,
-    //         title: e.name,
-    //         start: moment(e.start_time).format('yyyy-MM-DD HH:mm:ss'),
-    //         end: moment(e.end_time).format('yyyy-MM-DD HH:mm:ss'),
-    //         extendedProps: {
-    //             task_type: e.task_type,
-    //             task_property: e.task_property,
-    //             execute_status: e.execute_status
-    //         },
-    //         backgroundColor: getTaskBackground(e.task_type, e.execute_status),
-    //         borderColor: '#ffffff',
-    //         textColor: e.execute_status == '2' ? '#262626' : '#ffffff',
-    //         allDay: all_day_bool
-    //     }
-    //     eventList.value.push(event)
-    // })
-    // console.log('events', eventList.value)
     // console.log('tabsListData', tabsListData.value)
-    // calendar.value.addEventSource(eventList.value)
-    // renderCal()
-}
-
-// 请求任务列表（日历）isMounted： 是否是初始化
-async function getTaskList(isMounted) {
     let ret = await Http.calendarData({
-        // start_time: showStartTime(),
-        // end_time: showEndTime(),
-        start_time: startTime.value,
-        end_time: endTime.value,
+        start_time: showStartTime(),
+        end_time: showEndTime(),
         type: task_type.value
     })
     if (eventList.value.length > 0) {
-        // 清除之前的任务， 防止任务叠加
-        eventList.value.forEach(item => {
-            let event =  calendar.value.getEventById(item.id)
-            event.remove()
-        })
         eventList.value = []
     }
     ret.data.forEach(e => {
@@ -503,11 +409,9 @@ async function getTaskList(isMounted) {
         }
         eventList.value.push(event)
     })
-    if (isMounted) {
-        renderCal()
-    } else {
-        calendar.value.addEventSource(eventList.value)
-    }
+    // console.log('events', eventList.value)
+    // console.log('tabsListData', tabsListData.value)
+    renderCal()
 }
 function getTaskBackground(type, status) {
     let color = ''
@@ -820,16 +724,16 @@ const goDetail = id => {
         }
     })
 }
-function showStartTime(data) {
-    let now = data || new Date()
+function showStartTime() {
+    let now = new Date()
     let nowMonth = now.getMonth() // 当前月
     let nowYear = now.getFullYear() // 当前年
     let monthEndDate = new Date(nowYear, nowMonth, 0)
     return moment(monthEndDate).format('yyyy-MM-DD')
 }
 
-function showEndTime(data) {
-    let now = data || new Date()
+function showEndTime() {
+    let now = new Date()
     let nowMonth = now.getMonth() // 当前月
     let nowYear = now.getFullYear() // 当前年
     let monthEndDate = new Date(nowYear, nowMonth + 1, 0)
@@ -858,7 +762,6 @@ function showEndTime(data) {
     // }
 }
 .task-check {
-    // min-width: 300px;
     .btn-class{
     float: right;
     }
@@ -893,10 +796,7 @@ function showEndTime(data) {
             .loadMore{
                 width: 100%;
                 height: 30px;
-                text-align: center;
-                &:hover{
-                    cursor: pointer;
-                }
+                text-align: center
             }
             .tab-content{
                 // overflow-x: hidden;
@@ -904,10 +804,10 @@ function showEndTime(data) {
                 // height: 105px;
                 border: 1px solid #D9D9D9;
                 .content-title{
-                    // height: 24px;
+                    height: 24px;
                     line-height: 24px;
                     font-size: 16px;
-                    font-weight: 500;
+                    font-weight: 700;
                     color: rgba(0,0,0,0.85);
                     overflow: hidden;      /*溢出隐藏*/
                     white-space: nowrap;	/*规定文本不进行换行*/

@@ -1,10 +1,6 @@
 import { defineConfig, loadEnv } from 'vite'
 import createVitePlugins from './vite/plugins'
 
-// import postcssImport from 'postcss-import'
-// import autoprefixer from 'autoprefixer'
-// import tailwindcss from 'tailwindcss'
-
 const fs = require('fs')
 const path = require('path')
 
@@ -63,31 +59,6 @@ export default ({ mode, command }) => {
                 scss: {
                     additionalData: scssResources.join('')
                 }
-            },
-            // postcss: {
-            //     plugins: [
-            //         postcssImport,
-            //         autoprefixer
-            //         // tailwindcss
-            //     ]
-            // }
-
-            postcss: {
-                plugins: [
-                    // 前缀追加
-                    require('autoprefixer')({
-                        overrideBrowserslist: [
-                            'Android 4.1',
-                            'iOS 7.1',
-                            'Chrome > 31',
-                            'ff > 31',
-                            'ie >= 8',
-                            '> 1%'
-                        ],
-                        grid: true
-                    }),
-                    require('postcss-flexbugs-fixes')
-                ]
             }
         }
     })

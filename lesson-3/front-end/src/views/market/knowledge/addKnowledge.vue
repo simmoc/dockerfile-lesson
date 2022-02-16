@@ -6,17 +6,17 @@
             <div class="head-content-item">
                 创建成员：{{
                     (eventDetail && eventDetail.member_name) ||
-                        '—'
+                        '--'
                 }}
             </div>
             <div class="head-content-item">
-                创建时间：{{ (eventDetail && eventDetail.create_time) || '—' }}
+                创建时间：{{ (eventDetail && eventDetail.create_time) || '--' }}
             </div>
             <div class="head-content-item">
-                最后修改成员：{{ (eventDetail && eventDetail.member_name) || '—' }}
+                最后修改成员：{{ (eventDetail && eventDetail.member_name) || '--' }}
             </div>
             <div class="head-content-item ">
-                最后修改时间：{{ (eventDetail && eventDetail.update_time) || '—' }}
+                最后修改时间：{{ (eventDetail && eventDetail.update_time) || '--' }}
             </div>
         </div>
         <page-main class="">

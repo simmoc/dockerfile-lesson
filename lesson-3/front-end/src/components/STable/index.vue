@@ -62,6 +62,7 @@
 
 <script setup>
 import { onMounted } from 'vue'
+import { defineExpose } from 'vue'
 // const { expose } = useContext()
 const clientWidth = ref(0)
 const props = defineProps({

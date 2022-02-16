@@ -156,29 +156,26 @@
                                     />
                                 </el-form-item>
                             </el-col>
-                            <el-col :span="12">
+                            <el-col :span="11">
                                 <el-form-item label="成员筛选" prop="receive_group">
-                                    <selectMember
-                                        ref="addMemberDialogRef"
-                                        input-placeholder="请选择企微成员"
-                                        :is-group="taskData.touch_object == 'GROUP'"
+                                    <calendarSelectMember
+                                        input-placeholder="请选择"
+                                        :write-back-selected-member-org="form.writeBackSelectedMemberOrg"
                                         :is-multiple-selected="true"
                                         :custom-input-value-fn="form.customInputValueFn"
                                         :custom-selected-fn="customSelectedFn"
-                                        :write-back-selected-member-org="form.writeBackSelectedMemberOrg"
+                                        :touch-object="taskData.touch_object"
                                         @confirm="confirmChooseMember"
                                     >
                                         <template #default="scope">
-                                            <span>
-                                                <el-input
-                                                    v-model="scope.data"
-                                                    placeholder="请选择"
-                                                    suffix-icon="el-icon-caret-bottom"
-                                                    readonly
-                                                />
-                                            </span>
+                                            <el-input
+                                                v-model="scope.data"
+                                                placeholder="请选择"
+                                                suffix-icon="el-icon-caret-bottom"
+                                                readonly
+                                            />
                                         </template>
-                                    </selectMember>
+                                    </calendarSelectMember>
                                 </el-form-item>
                             </el-col>
                         </el-row>
@@ -189,27 +186,25 @@
                             筛选群主
                         </label>
                         <el-form-item label="成员筛选" prop="receive_group">
-                            <selectMember
-                                ref="addMemberDialogRef"
-                                input-placeholder="请选择企微成员"
-                                :is-group="taskData.touch_object == 'GROUP'"
+                            <calendarSelectMember
+                                input-placeholder="请选择"
+                                :write-back-selected-member-org="form.writeBackSelectedMemberOrg"
                                 :is-multiple-selected="true"
                                 :custom-input-value-fn="form.customInputValueFn"
                                 :custom-selected-fn="customSelectedFn"
-                                :write-back-selected-member-org="form.writeBackSelectedMemberOrg"
+                                :touch-object="taskData.touch_object"
                                 @confirm="confirmChooseMember"
                             >
                                 <template #default="scope">
-                                    <span>
-                                        <el-input
-                                            v-model="scope.data"
-                                            placeholder="请选择"
-                                            suffix-icon="el-icon-caret-bottom"
-                                            readonly
-                                        />
-                                    </span>
+                                    <el-input
+                                        v-model="scope.data"
+                                        placeholder="请选择"
+                                        suffix-icon="el-icon-caret-bottom"
+                                        readonly
+                                        class="known"
+                                    />
                                 </template>
-                            </selectMember>
+                            </calendarSelectMember>
                         </el-form-item>
                     </div>
                     <div v-if="taskData.touch_object == 'MOMENTS'">
@@ -228,10 +223,9 @@
                                     />
                                 </el-form-item>
                             </el-col>
-                            <el-col :span="12">
+                            <el-col :span="11">
                                 <el-form-item label="成员筛选" prop="receive_group">
-                                    <!-- <calendarSelectMember
-                                        :title="`&emsp;`"
+                                    <calendarSelectMember
                                         :write-back-selected-member-org="form.writeBackSelectedMemberOrg"
                                         :is-multiple-selected="true"
                                         :custom-input-value-fn="form.customInputValueFn"
@@ -247,28 +241,7 @@
                                                 readonly
                                             />
                                         </template>
-                                    </calendarSelectMember> -->
-                                    <selectMember
-                                        ref="addMemberDialogRef"
-                                        input-placeholder="请选择企微成员"
-                                        :is-group="taskData.touch_object == 'GROUP'"
-                                        :is-multiple-selected="true"
-                                        :custom-input-value-fn="form.customInputValueFn"
-                                        :custom-selected-fn="customSelectedFn"
-                                        :write-back-selected-member-org="form.writeBackSelectedMemberOrg"
-                                        @confirm="confirmChooseMember"
-                                    >
-                                        <template #default="scope">
-                                            <span>
-                                                <el-input
-                                                    v-model="scope.data"
-                                                    placeholder="请选择"
-                                                    suffix-icon="el-icon-caret-bottom"
-                                                    readonly
-                                                />
-                                            </span>
-                                        </template>
-                                    </selectMember>
+                                    </calendarSelectMember>
                                 </el-form-item>
                             </el-col>
                         </el-row>
@@ -394,7 +367,7 @@ import { useRouter, useRoute } from 'vue-router'
 import { ElMessage } from 'element-plus'
 import calendarDialog from '@/views/marketing/task/compontent/calendarDialog.vue'
 import calendarSelect from './compontent/calendarSelect.vue'
-// import calendarSelectMember from './compontent/calendar-select-member.vue'
+import calendarSelectMember from './compontent/calendar-select-member.vue'
 import CustomerMedia from '@/components/CustomerMedia/index.vue'
 import CustomerClander from '@/components/CustomerClander/index.vue'
 import CustomerTitle from '@/components/CustomerTitle/index.vue'
@@ -414,7 +387,6 @@ const editParams = ref({})
 const dialogEdit = ref(false)
 const dialogEditText = ref(false)
 const dialogButton = ref(false)
-const addMemberDialogRef = ref(null)
 // 编辑页时候禁止更改重复
 const editDisabled = ref(false)
 // 立即开始禁选
@@ -621,14 +593,7 @@ function disabledStartDate(time) {
 // 最多一个月时间间隔
 function disabledEndDate(time) {
     const timeRange = 24 * 60 * 60 * 1000
-    let minTime = 0
-    // 处于自定义时间模式并 存在 开始时间时
-    if (taskData.value.start_type == 'CUSTOM' && taskData.value.start_time) {
-        minTime = moment(taskData.value.start_time).unix() * 1000 - timeRange
-    } else {
-        minTime = Date.now() - timeRange
-    }
-   
+    const minTime = Date.now() - timeRange
     // let minTime = new Date(taskData.value.start_time).getTime()
     // console.log('1111', minTime)
     const maxTime = minTime + timeRange * 30
@@ -1142,7 +1107,7 @@ const getTouchNum = async() => {
 }
 
 watch(() => taskData.value, () => {
-    if (taskData.value.repeat_deadline != '' && taskData.value.is_repeat != '0' && taskData.value.repeat_space >= '1') {
+    if (taskData.value.repeat_deadline != '' && taskData.value.is_repeat != '0') {
         getTaskRepeatNum()
     }
 }, {
@@ -1170,9 +1135,6 @@ function confirmChooseMember(r) {
             // console.log('eleele', ele)
             select_members.push(ele.id)
         })
-    }
-    if (addMemberDialogRef.value) {
-        addMemberDialogRef.value.dialogVisible = false
     }
     if (route.query.type == 'edit' && !taskData.value.receive_group[0]) {
         taskData.value.receive_group.push({})

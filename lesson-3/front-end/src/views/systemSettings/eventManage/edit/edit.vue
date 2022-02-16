@@ -5,13 +5,13 @@
             class="edit-content-head flex flex-justify-start flex-align-center pl24 pr24"
         >
             <div class="edit-content-head-item">
-                创建成员：{{ reactData.eventDetail.creator_name || '—' }}
+                创建成员：{{ reactData.eventDetail.creator_name || '--' }}
             </div>
             <div class="edit-content-head-item">
-                创建时间：{{ reactData.eventDetail.create_time || '—' }}
+                创建时间：{{ reactData.eventDetail.create_time || '--' }}
             </div>
             <div class="edit-content-head-item">
-                更新时间：{{ reactData.eventDetail.update_time || '—' }}
+                更新时间：{{ reactData.eventDetail.update_time || '--' }}
             </div>
         </div>
         <page-main>
@@ -24,13 +24,13 @@
                 class="edit-content-head flex flex-justify-start flex-align-center pl24 pr24"
             >
                 <div class="edit-content-head-item">
-                    创建成员：{{ reactData.eventDetail.creator_name || '—' }}
+                    创建成员：{{ reactData.eventDetail.creator_name || '--' }}
                 </div>
                 <div class="edit-content-head-item">
-                    创建时间：{{ reactData.eventDetail.create_time || '—' }}
+                    创建时间：{{ reactData.eventDetail.create_time || '--' }}
                 </div>
                 <div class="edit-content-head-item">
-                    更新时间：{{ reactData.eventDetail.update_time || '—' }}
+                    更新时间：{{ reactData.eventDetail.update_time || '--' }}
                 </div>
             </div> -->
                 <div class="edit-content-wrap event-edit-content-wrap pr24">
@@ -78,11 +78,11 @@
                                 </el-row>
                             </template>
                             <div v-else class="list-content-detail">
-                                <div class="r-title">{{ reactData.eventDetail.event_name || '—' }}</div>
+                                <div class="r-title">{{ reactData.eventDetail.event_name || '--' }}</div>
                                 <div class="r-text">
                                     <span class="color-label">事件标识：</span>
                                     <span class="color-txt mr32">
-                                        {{ reactData.eventDetail.event_key || '—' }}
+                                        {{ reactData.eventDetail.event_key || '--' }}
                                     </span>
                                 </div>
                             </div>
@@ -206,11 +206,11 @@
                                     </span>
                                     <span class="color-label">货：</span>
                                     <span class="color-txt mr32">
-                                        {{ reactData.eventDetail.mainstay.good.name || '—' }}
+                                        {{ reactData.eventDetail.mainstay.good.name || '--' }}
                                     </span>
                                     <span class="color-label">场：</span>
                                     <span class="color-txt">
-                                        {{ reactData.eventDetail.mainstay.scene.name || '—' }}
+                                        {{ reactData.eventDetail.mainstay.scene.name || '--' }}
                                     </span>
                                 </div>
                             </div>
@@ -384,11 +384,10 @@
 import Http from '@/util/request.js'
 import { useRoute, useRouter } from 'vue-router'
 import { ElMessageBox, ElMessage } from 'element-plus'
-import { onMounted, ref, reactive, nextTick } from 'vue'
 
 // 图片引入，需要用拼接的方式
 function getImageUrl(url) {
-    return new URL(`../../../../assets/images/eventManage/${url}.svg`, import.meta.url).href
+    return new URL(`../../../../assets/images/eventManage/${url}.png`, import.meta.url).href
 }
 // 生命周期
 onMounted(() => {

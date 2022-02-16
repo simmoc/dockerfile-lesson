@@ -97,20 +97,7 @@
                                 :table-title="reacData.tableTitle"
                                 :table-data="reacData.tableData"
                                 :need-pagination="true"
-                            >
-                                <!-- 成员姓名 -->
-                                <template #member_name="scope">
-                                    <div class="flex flex-align-center color-primary">
-                                        <MenberItem 
-                                            class="table-member-card"
-                                            :member-id="scope.data.member_id" 
-                                            :avatar="scope.data.member_avatar"
-                                            :name="scope.data.member_name"
-                                            :department-name="scope.data.member_department"
-                                        />
-                                    </div>
-                                </template>
-                            </CustomerTable>
+                            />
                         </div>
                         <div class="table-pagination-wrap flex flex-justify-end">
                             <el-pagination
@@ -160,8 +147,7 @@ const reacData = reactive({
     tableTitle: [
         {
             label: '成员名称',
-            prop: 'member_name',
-            type: 'slot'
+            prop: 'member_name'
         },
         {
             label: '任务名称',
@@ -380,5 +366,4 @@ function resetHeadSearch() {
     right: -4px;
   }
 }
-
 </style>

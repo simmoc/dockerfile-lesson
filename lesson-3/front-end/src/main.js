@@ -33,7 +33,7 @@ import '@/assets/styles/compontent/task-element-variables.scss'
 // 全局样式
 import '@/assets/styles/globals.scss'
 // 重置样式
-import '@/assets/styles/base.scss'
+import '@/assets/styles/base.css'
 import '@/assets/styles/element-variables.scss'
 
 // 日程插件样式

@@ -17,6 +17,7 @@
 <script setup>
 import CustomerMediaList from '@/components/CustomerMediaList/index.vue'
 import CustomerMediaButton from '@/components/CustomerMedia/CustomerMediaButton.vue'
+import { defineProps } from 'vue'
 // import vxRule from '@/util/formValidate'
 
 const props = defineProps({

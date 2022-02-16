@@ -43,14 +43,12 @@
                                             placement="top"
                                         >
                                             <span @click.stop="customSelect(node, data)">
-                                                <img class="icon" :src="getImageUrl(data.type)">
                                                 {{ node.label.slice(0, 12) + '...' }}
                                             </span>
                                         </el-tooltip>
                                     </template>
                                     <template v-else>
                                         <span @click.stop="customSelect(node, data)">
-                                            <img class="icon" :src="getImageUrl(data.type)">
                                             {{ node.label }}
                                         </span>
                                     </template>
@@ -249,8 +247,7 @@ const reacData = reactive({
     expandedKeys: ['d-1'],
     departmentIcon,
     memberIcon,
-    selected,
-    iconEnum: { 'CHAIN': 'league-icon', 'GROUP': 'group-icon', 'COMPANY': 'company-icon', 'MEMBER': 'member@2x', 'DEPARTMENT': 'department-icon' }
+    selected
 })
 const selectedMembers = ref([])
 
@@ -419,15 +416,11 @@ async function getOrgList(id) {
         let params = {}
         params.qw_parentid = id
         params.touch_object = props.touchObject || ''
-        Http.getMemberDepartmentList(params).then(res => {
+        Http.getCalendarDepartment(params).then(res => {
             reacData.department_data = res.data
             resolve(reacData.department_data)
         })
     })
-}
-// 获取图标地址
-function getImageUrl(key) {
-    return new URL(`../../../../assets/images/selectMember/${reacData.iconEnum[key]}.png`, import.meta.url).href
 }
 
 </script>

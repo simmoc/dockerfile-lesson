@@ -21,21 +21,19 @@
                     <template v-if="reacData.memberTreeType === 'default'">
                         <el-tree
                             ref="tree"
+                            :data="reacData.treeData"
                             :default-expanded-keys="reacData.expandedKeys"
                             node-key="id"
                             :props="reacData.defaultProps"
+                            :highlight-current="true"
                             :show-checkbox="props.isMultipleCheckBox"
                             check-strictly
                             render-after-expand
-                            lazy
-                            :load="nodeLoad"
+                            :default-expand-all="true"
+                            @node-click="handleNodeClick"
+                            @node-expand="handleNodeExpand"
                             @check="handleCheck"
                         >
-                            <!-- :highlight-current="true" -->
-                            <!-- :data="reacData.treeData" -->
-                            <!-- :default-expand-all="true" -->
-                            <!-- @node-click="handleNodeClick" -->
-                            <!-- @node-expand="handleNodeExpand" -->
                             <template #default="{ node, data }">
                                 <span class="custom-tree-node">
                                     <template v-if="node.label && node.label.length > 12">
@@ -45,14 +43,12 @@
                                             placement="top"
                                         >
                                             <span @click.stop="customSelect(node, data)">
-                                                <img class="icon" :src="getImageUrl(data.type)">
                                                 {{ node.label.slice(0, 12) + '...' }}
                                             </span>
                                         </el-tooltip>
                                     </template>
                                     <template v-else>
                                         <span @click.stop="customSelect(node, data)">
-                                            <img class="icon" :src="getImageUrl(data.type)">
                                             {{ node.label }}
                                         </span>
                                     </template>
@@ -96,7 +92,14 @@
                                 </el-tooltip>
                             </div>
                             <!-- v-if="tag.isOrg" 现在要求都显示上级 -->
-                            <div style="max-width: 30%;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;">
+                            <div
+                                style="
+                  max-width: 30%;
+                  overflow: hidden;
+                  text-overflow: ellipsis;
+                  white-space: nowrap;
+                "
+                            >
                                 <el-tooltip
                                     effect="dark"
                                     :content="item.parent_name"
@@ -187,7 +190,7 @@ import departmentIcon from '../../assets/images/selectMember/department@2x.png'
 import memberIcon from '../../assets/images/selectMember/member@2x.png'
 import selected from '../../assets/images/selectMember/tick@2x.png'
 import Http from '@/util/request.js'
-import { getCurrentInstance, watch  } from 'vue'
+import { getCurrentInstance  } from 'vue'
 
 const props = defineProps({
     isMultipleSelected: {
@@ -221,10 +224,6 @@ const props = defineProps({
         default: function() {
             return true
         }
-    },
-    params: {
-        type: Object,
-        default: () => ({})
     }
 })
 
@@ -244,23 +243,16 @@ const reacData = reactive({
     expandedKeys: ['d-1'],
     departmentIcon,
     memberIcon,
-    selected,
-    iconEnum: { 'CHAIN': 'league-icon', 'GROUP': 'group-icon', 'COMPANY': 'company-icon', 'MEMBER': 'member@2x', 'DEPARTMENT': 'department-icon' }
+    selected
 })
 const selectedMembers = ref([])
 
 // 抛出
 defineExpose({
-    selectedMembers
-    // handleNodeExpand
+    selectedMembers,
+    handleNodeExpand
 })
 const { proxy } = getCurrentInstance()
-watch(() => props.dialogVisible, newval => {
-    if (!newval && props.selectedMemberOrg) {
-        selectedMembers.value = JSON.parse(JSON.stringify(props.selectedMemberOrg))
-        reacData.selectedMemberIds = selectedMembers.value.map(ele => ele.id)
-    }
-})
 watch(() => props.selectedMemberOrg, selectedNew => {
     if (selectedNew) {
         selectedMembers.value = JSON.parse(JSON.stringify(selectedNew))
@@ -270,7 +262,7 @@ watch(() => props.selectedMemberOrg, selectedNew => {
 }, { immediate: true })
 
 onMounted(async() => {
-    // reacData.treeData = await getOrgList(0)
+    reacData.treeData = await getOrgList(0)
 })
 
 function handleCheck(node, checked) {
@@ -283,11 +275,12 @@ function handleCheckMember(checked) {
 // 单选选中节点
 function handleSelectMember(data) {
     let curLen = selectedMembers.value.length
+    // console.log('1111', data, curLen)
     // let d = props.customSelectedFn(data, curLen)
     if (!props.customSelectedFn(data, curLen)) {
         return
     }
-
+    // console.log('2222', reacData.selectedMemberIds, data.id, props.isMultipleSelected)
     if (!reacData.selectedMemberIds.includes(data.id)) {
         if (props.isMultipleSelected) {
             selectedMembers.value.push(data)
@@ -316,77 +309,61 @@ async function customSelect(node, data) {
         handleDelMember(idI)
     }
 }
-// async function handleNodeExpand(data, node) {
+async function handleNodeExpand(data, node) {
 
-//     if (!data.isLeaf) {
-//         // 判断部门节点 子节点 是否已请求过
-//         if (node.childNodes && node.childNodes.length) {
-//             return
-//         }
+    if (!data.isLeaf) {
+        // 判断部门节点 子节点 是否已请求过
+        if (node.childNodes && node.childNodes.length) {
+            return
+        }
 
-//         let isNextOrg = data.isNextOrg
-//         let key = node.key
+        let isNextOrg = data.isNextOrg
+        let key = node.key
 
-//         let child = []
-//         // 判断部门节点 子节点 是部门还是成员 data.isNextOrg
-//         if (isNextOrg) {
-//             child = await getOrgList(key)
-//         } else {
-//             child = await getMember(key)
-//         }
-//         if (child && child.length) {
-//             proxy.$refs.tree.updateKeyChildren(key, child)
-//         }
-//     }
+        let child = []
+        // 判断部门节点 子节点 是部门还是成员 data.isNextOrg
+        if (isNextOrg) {
+            child = await getOrgList(key)
+        } else {
+            child = await getMember(key)
+        }
+        if (child && child.length) {
+            proxy.$refs.tree.updateKeyChildren(key, child)
+        }
+    }
 
-// }
+}
 // 获取部门
 // 左侧树节点点击
-// async function handleNodeClick(data, node) {
-//     // 点击成员节点 保存右侧
-//     if (!data.isOrg) {
-//         if (!props.isMultipleCheckBox) {
-//             handleSelectMember(data)
-//         }
-//         return
-//     }
-//     // 判断部门节点 子节点 是否已请求过
-//     if (node.childNodes && node.childNodes.length) {
-//         return
-//     }
-
-//     let isNextOrg = data.isNextOrg
-//     let key = node.key
-
-//     let child = []
-//     // 判断部门节点 子节点 是部门还是成员 data.isNextOrg
-//     if (isNextOrg) {
-//         child = await getOrgList(key)
-//     } else {
-//         child = await getMember(key)
-//     }
-//     if (child && child.length) {
-//         proxy.$refs.tree.updateKeyChildren(key, child)
-//         reacData.expandedKeys = [data.id]
-//     }
-// }
-const nodeLoad = async(node, resolve) => {
-    console.log('nodeLoad', node)
-    const { isNextOrg } = node.data
-    if (node.level === 0) {
-        reacData.expandedKeys = []
-        reacData.treeData = await getOrgList(0)
-        return resolve(reacData.treeData)
+async function handleNodeClick(data, node) {
+    console.log(data)
+    // 点击成员节点 保存右侧
+    if (!data.isOrg) {
+        if (!props.isMultipleCheckBox) {
+            handleSelectMember(data)
+        }
+        return
     }
+    // 判断部门节点 子节点 是否已请求过
+    if (node.childNodes && node.childNodes.length) {
+        return
+    }
+
+    let isNextOrg = data.isNextOrg
+    let key = node.key
+
     let child = []
+    // 判断部门节点 子节点 是部门还是成员 data.isNextOrg
     if (isNextOrg) {
-        child = await getOrgList(node.key)
+        child = await getOrgList(key)
     } else {
-        child = await getMember(node.key)
+        child = await getMember(key)
     }
-    reacData.expandedKeys = [node.key]
-    resolve(child)
-    
+    if (child && child.length) {
+        console.log('请求children===', child)
+        proxy.$refs.tree.updateKeyChildren(key, child)
+        reacData.expandedKeys = [data.id]
+    }
 }
 function clearSearchMemberKey() {
     reacData.keyword = ''
@@ -405,49 +382,36 @@ async function searchMemberByKey() {
     }
 }
 async function selectSearchMember(item) {
-    // reacData.keyword = item.department_name
-    // reacData.memberTreeType = 'default'
+    reacData.keyword = item.department_name
+    reacData.memberTreeType = 'default'
     // 通过成员反向查树节点
-    // reacData.treeData = await getOrgList(0)
-    // reacData.expandedKeys = [item.id]
+    reacData.treeData = await getOrgList(0)
+    reacData.expandedKeys = [item.id]
     handleSelectMember(item)
 }
 // 获取成员
 async function getMember(id) {
-    console.log('-----------', props.params)
     return new Promise(resolve => {
         reacData.member_data = []
-        let params = { ...props.params }
-        params.qw_parentid = id || ''
+        let params = {}
+        params.id = id || ''
         params.keyword = reacData.keyword || ''
-        if (props.isGroup) params.touch_object = 'GROUP'
-        Http.getMemberDepartmentList(params).then(res => {
+        Http.getMemberList(params).then(res => {
             reacData.member_data = res.data
             resolve(res.data)
+            console.log('得到结果', reacData.department_data)
         })
-        // Http.getMemberList(params).then(res => {
-        //     reacData.member_data = res.data
-        //     resolve(res.data)
-        //     console.log('得到结果', reacData.department_data)
-        // })
     })
 }
 // 获取部门
 async function getOrgList(id) {
-    console.log('-----------', props.params)
-    // if (id == 0 && reacData.keyword) reacData.keyword = ''
     return new Promise(resolve => {
-        var params = { qw_parentid: id, ...props.params }
-        if (props.isGroup) params.touch_object = 'GROUP'
+        var params = { qw_parentid: id }
         Http.getMemberDepartmentList(params).then(res => {
             reacData.department_data = res.data
             resolve(reacData.department_data)
         })
     })
-}
-// 获取图标地址
-function getImageUrl(key) {
-    return new URL(`../../assets/images/selectMember/${reacData.iconEnum[key]}.png`, import.meta.url).href
 }
 
 </script>

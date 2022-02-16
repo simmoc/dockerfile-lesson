@@ -4,7 +4,6 @@ import store from '@/store'
 import NProgress from 'nprogress'
 import 'nprogress/nprogress.css' // progress bar style
 import path from 'path-browserify'
-// import { deepClone } from '@/util'
 // 固定路由
 const constantRoutes = [
     {
@@ -90,8 +89,6 @@ import customer from './modules/customer'
 import marketing from './modules/marketing'
 import riskControl from './modules/riskControl'
 import shop from './modules/shop'
-// import Mall from './modules/mall'
-
 // import dataTotal from './modules/dataTotal'
 // import { setItem } from '@/util/storage'
 // function defaultComponent(component) {
@@ -112,8 +109,7 @@ const asyncRoutes = [
     {
         meta: {
             title: '客户',
-            icon: 'customer',
-            activeMenu: '/customer'
+            icon: 'customer'
         },
         children: customer
     },
@@ -142,14 +138,6 @@ const asyncRoutes = [
             shop
         ]
     },
-    // {
-    //     meta: {
-    //         title: '积分商城',
-    //         icon: 'mall'
-    //     },
-    //     children: Mall
-        
-    // },
     // {
     //     meta: {
     //         title: '数据统计',
@@ -203,16 +191,7 @@ const router = createRouter({
 // }
 // getPermission()
 // console.log(isPermission)
-// const testArr = routers => {
-//     const resArr = routers.find(item => item.meta.title == '客户').children
-//     const filterArr = resArr.find(item => item.meta.title == '客户').children
-//     const filter = filterArr.find(item => item.name == 'weChatCustomer')
-//     filter.path = filter.path.split(':')[0] + '456'
-//     const filterObj = deepClone(filterArr.find(item => item.name == 'weChatCustomer'))
-//     filterObj.path = filterObj.path.split(':')[0] + '123'
-//     filterArr.push(filterObj)
-//     return routers
-// }
+
 router.beforeEach(async(to, from, next) => {
     console.log('去哪', to)
     store.state.settings.enableProgress && NProgress.start()
@@ -237,9 +216,6 @@ router.beforeEach(async(to, from, next) => {
         accessRoutes.forEach(route => {
             removeRoutes.push(router.addRoute(route))
         })
-        // let arr = testArr(deepClone(store.state.menu.routes))
-        // store.commit('menu/setRoutes', arr)
-        // console.log('accessRoutes 最后的', accessRoutes, router)
         // 记录的 accessRoutes 路由数据，在登出时会使用到，不使用 router.removeRoute 是考虑配置的路由可能不一定有设置 name ，则通过调用 router.addRoute() 返回的回调进行删除
         store.commit('menu/setCurrentRemoveRoutes', removeRoutes)
         next({ ...to, replace: true })

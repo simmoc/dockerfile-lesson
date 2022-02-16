@@ -1,7 +1,7 @@
 <template>
     <div class="customer-select">
         <div>
-            <div class="customer-input flex flex-align-center" @click="expand = !expand">
+            <div class="customer-input" @click="expand = !expand">
                 <span v-if="selectList.length === 0" class="customer-placeholder">
                     请选择标签{{ treeChecked }}
                 </span>
@@ -196,10 +196,8 @@ export default {
         this.getTagSearch()
     },
     methods: {
-        close() {
-            this.expand = false
-        },
         search: bounce(function(val) {
+            console.log(val)
             this.getTagSearch(val)
         }),
         async getTagSearch(val) {
@@ -427,7 +425,7 @@ export default {
         height: 32px;
         min-height: 32px;
         border-radius: 4px;
-        border: 1px solid #d9d9d9;
+        border: 1px solid #ebeef5;
         cursor: pointer;
         position: relative;
         padding-right: 40px;
@@ -499,6 +497,8 @@ export default {
         ul li{
             height:28px;
         }
+    }
+    .select-search-ul {
     }
     .select-ul .tag-group:hover {
         background-color: #f5f7fa;

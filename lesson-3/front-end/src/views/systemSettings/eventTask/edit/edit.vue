@@ -5,13 +5,13 @@
             class="edit-content-head flex flex-justify-start flex-align-center flex-align-center pl24 pr24"
         >
             <div class="edit-content-head-item">
-                创建成员：{{ form.author || '—' }}
+                创建成员：{{ form.author || '--' }}
             </div>
             <div class="edit-content-head-item">
-                创建时间：{{ form.create_time || '—' }}
+                创建时间：{{ form.create_time || '--' }}
             </div>
             <div class="edit-content-head-item">
-                更新时间：{{ form.update_time || '—' }}
+                更新时间：{{ form.update_time || '--' }}
             </div>
         </div>
         <page-main>
@@ -24,13 +24,13 @@
                     class="edit-content-head flex flex-justify-start flex-align-center flex-align-center pl24 pr24"
                 >
                     <div class="edit-content-head-item">
-                        创建成员：{{ form.author || '—' }}
+                        创建成员：{{ form.author || '--' }}
                     </div>
                     <div class="edit-content-head-item">
-                        创建时间：{{ form.create_time || '—' }}
+                        创建时间：{{ form.create_time || '--' }}
                     </div>
                     <div class="edit-content-head-item">
-                        更新时间：{{ form.update_time || '—' }}
+                        更新时间：{{ form.update_time || '--' }}
                     </div>
                 </div> -->
                 <div class="edit-content-wrap task-event-edit-content-wrap pb24">
@@ -111,11 +111,11 @@
                                 </el-row>
                             </template>
                             <div v-else class="list-content-detail">
-                                <div class="r-title">{{ form.name || '—' }}</div>
+                                <div class="r-title">{{ form.name || '--' }}</div>
                                 <div class="r-text">
                                     <span class="color-label">选择分组：</span>
                                     <span class="color-txt mr32">
-                                        {{ form.task_category_id_txt || '—' }}
+                                        {{ form.task_category_id_txt || '--' }}
                                     </span>
                                     <span>执行结束时间：</span>
                                     <span class="color-txt">执行时间将在</span>
@@ -151,7 +151,7 @@
                             <div v-if="['detail'].includes(pageType)" class="list-content-detail">
                                 <div class="r-text mb24">
                                     <span class="color-label">事件：</span>
-                                    <span class="color-txt">{{ form.events_name || '—' }}</span>
+                                    <span class="color-txt">{{ form.events_name || '--' }}</span>
                                 </div>
                             </div>
                             <!-- <el-row :gutter="20" v-if="form.events_id && (['detail'].includes(pageType) )"> -->
@@ -464,7 +464,7 @@ export default {
     methods: {
         // 图片引入，需要用拼接的方式
         getImageUrl(url) {
-            return new URL(`../../../../assets/images/eventManage/${url}.svg`, import.meta.url).href
+            return new URL(`../../../../assets/images/eventManage/${url}.png`, import.meta.url).href
         },
         // 主体变更
         subjectChange() {

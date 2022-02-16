@@ -265,7 +265,7 @@ function switchMenu(index) {
         .main-container {
             display: flex;
             flex-direction: column;
-            // min-height: 100%;
+            min-height: 100%;
             transition: margin-left 0.3s;
             background-color: $g-main-bg;
             box-shadow: 1px 0 0 0 darken($g-main-bg, 10);

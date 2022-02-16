@@ -88,7 +88,7 @@
                     </el-popover>
 
                     <div class="file-text">
-                        <p class="file-media-title">{{ item.title||item.qw_link_title||item.qw_miniprogram_title|| item.file_name ||item.name }}</p>
+                        <p class="file-media-title">{{ item.file_name||item.title||item.name||item.qw_link_title||item.qw_miniprogram_title }}</p>
                         <p v-if="item.type==='LINK'" class="file-media-tip">{{ item.url_content||(item.url?item.url+item.qw_link_url:item.qw_link_url) }}</p>
                     </div>
                 </div>
@@ -145,7 +145,7 @@
                     </el-popover>
 
                     <div class="file-text">
-                        <p class="file-media-title">{{ item.title||item.qw_link_title||item.qw_miniprogram_title|| item.file_name ||item.name }}</p>
+                        <p class="file-media-title">{{ item.file_name||item.title||item.name||item.qw_link_title||item.qw_miniprogram_title }}</p>
                         <p v-if="item.type==='LINK'" class="file-media-tip">{{ item.url_content||(item.url+item.qw_link_url) }}</p>
                     </div>
                 </div>

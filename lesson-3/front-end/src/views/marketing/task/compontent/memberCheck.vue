@@ -1,122 +1,134 @@
 <template>
-    <el-dialog
-        :model-value="props.visible"
-        title="成员列表"
-        width="500px"
-        :before-close="onClose"
-    >
-        <div class="container">
-            <div 
-                v-for="(item, index) in dataSource" 
-                :key="index"
-                class="list-item relative" 
-            >
-                <div class="show-content flex flex-justify-between flex-align-center">
-                    <div class="flex flex-align-center color-primary">
-                        <el-avatar class="flex-s0 mr6" shape="square" :size="32" :src="item.qw_avatar" />
-                        <span>{{ item.qw_name || '--' }}</span>
-                    </div>
-                    <div>{{ item.qw_parentname || '--' }}</div>
-                </div>
-                <MenberItem 
-                    class="member-item"
-                    :member-id="item.id" 
-                    :avatar="item.qw_avatar"
-                    :name="item.qw_name"
-                    :department-name="item.qw_parentname"
+    <div>
+        <div class="member-class">
+            <el-table :data="checkData">
+                <el-table-column label="成员列表">
+                    <template #default="scope">
+                        <span class="event-list-page">
+                            <div class="icon-in-td">
+                                <img 
+                                    v-if="scope.row.qw_thumb_avatar"
+                                    :src="scope.row.qw_thumb_avatar"
+                                    :alt="scope.row.qw_thumb_avatar"
+                                >
+                            </div>
+                            <span class="cl-blue">
+                                {{ scope.row.member_name }}
+                            </span>
+                        </span>
+                    </template>
+                </el-table-column>
+                <el-table-column>
+                    <template #default="scope">
+                        <span class="event-list-page">
+                            <span class="member-name">
+                                {{ scope.row.parent_name }}
+                            </span>
+                        </span>
+                    </template>
+                </el-table-column>
+            </el-table>
+            <div class="member-pagination pt8">
+                <el-pagination
+                    size="small"
+                    :current-page="form.page_num"
+                    :page-size="form.page_size"
+                    layout="total,sizes, prev, pager, next"
+                    :total="total"
+                    @current-change="handleCurrentChange"
+                    @size-change="handleSizeChange"
                 />
             </div>
         </div>
-        <div class="member-pagination pt8">
-            <el-pagination
-                size="small"
-                :current-page="pageNum"
-                :page-size="pageSize"
-                layout="total,sizes, prev, pager, next"
-                :total="total"
-                @current-change="handleCurrentChange"
-                @size-change="handleSizeChange"
-            />
-        </div>
-    </el-dialog>
+    </div>
 </template>
 
 <script setup>
-import Http from '@/util/request.js'
+import { onMounted, ref } from 'vue'
 
 const props = defineProps({
-    id: {
-        type: Number,
-        default: () => 0
-    },
-    visible: {
-        type: Boolean,
-        default: () => false
+    memberData: {
+        type: Array
     }
 })
-
-watch(() => props.id, newval => {
-    if (newval) {
-        getOptionMemberList()
-    }
-}, { immediate: true, deep: true })
-
-const emit = defineEmits(['onClose'])
-const onClose = () => emit('onClose')
+const checkData = ref([])
 const total = ref(0)
-const pageNum = ref(1)
-const pageSize = ref(10)
-const dataSource = ref([])
-
-const getOptionMemberList = async() => {
-    const body = {
-        task_filtrate_group_id: props.id,
-        page: pageNum.value,
-        page_size: pageSize.value
-    }
-    const res = await Http.getOptionMemberList(body)
-
-    if (res.data) {
-        total.value = res.data.count
-        dataSource.value = res.data.list
-    }
+const form = ref({
+    page_num: 1,
+    page_size: 10
+})
+// 成员数据长度
+function getData() {
+    // if (props.memberData.length > 10) {
+    total.value = props.memberData.length
+    let start = (form.value.page_num - 1) * form.value.page_size
+    let end = start + form.value.page_size - 1
+    checkData.value = props.memberData.slice(start, end)
+    // }
+    // return total.value   
 }
-
-const handleCurrentChange = num => {
-    pageNum.value = num
-    getOptionMemberList()
+function handleCurrentChange(page) {
+    form.value.page_num = page
+    getData()
 }
-const handleSizeChange = size => {
-    pageSize.value = size
-    getOptionMemberList()
+function handleSizeChange(page) {
+    console.log(page)
+    getData()
 }
-
+// 关闭弹窗
+// function handleClose() {
+//     window.opener = null
+//     window.close()
+// }
+onMounted(() => {
+    getData()
+})
 </script>
 
 <style scoped lang="scss">
-    .container {
-        margin-top: -24px;
+.member-class{
+    width: 480px;
+    background: #ffffff;
+    border-radius: 2px;
+    .member-title{
+        width: 64px;
+        height: 24px;
+        font-size: 16px;
+        font-weight: 500;
+        line-height: 24px;
+        color: rgba(0,0,0,0.85);
+        margin-left: 24px;
     }
-
-    .list-item {
-        min-height: 56px;
-        border-bottom: 1px solid #F0F0F0;
-
-        .show-content, .member-item {
-            width: 100%;
-            height: 100%;
-            min-height: 56px;
-        }
-        .member-item {
-            position: absolute;
-            left: 0;
-            top: 0;
-            z-index: 100;
-            opacity: 0;
-        }
+    .member-name{
+        height: 20px;
+        font-size: 14px;
+        font-weight: 400;
+        color: rgba(0,0,0,0.45);
+        line-height: 20px;
     }
-    
-    .member-pagination {
-        text-align: right;
+    .event-list-page {
+    .cl-blue {
+      color: #1773FA;
+      cursor: pointer;
+  
+      &:hover {
+      }
     }
+  
+    .icon-in-td {
+      width: 22px;
+      height: 22px;
+      text-align: center;
+      display: inline-block;
+      margin-right: 9px;
+  
+      img {
+        width: 100%;
+      }
+    }
+}
+}
+.member-pagination {
+    text-align: right;
+}
 </style>

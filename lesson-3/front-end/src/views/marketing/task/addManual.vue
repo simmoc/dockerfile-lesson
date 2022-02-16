@@ -57,8 +57,8 @@
                                 <el-radio label="0">全部</el-radio>
                             </el-radio-group>
                         </el-form-item>
-                        <el-row v-if="taskData.receive_type == '1'" :gutter="24">
-                            <el-col :span="12">
+                        <el-row v-if="taskData.receive_type == '1'">
+                            <el-col :span="11" class="mr24">
                                 <el-form-item label="标签筛选" prop="receive_group" @change="getTouchNum">
                                     <calendarSelect
                                         v-model="treeChecked"
@@ -66,30 +66,9 @@
                                     />
                                 </el-form-item>
                             </el-col>
-                            <el-col :span="12">
+                            <el-col :span="11">
                                 <el-form-item label="成员筛选" prop="receive_group">
-                                    <selectMember
-                                        ref="addMemberDialogRef"
-                                        input-placeholder="请选择企微成员"
-                                        :is-group="taskData.touch_object == 'GROUP'"
-                                        :is-multiple-selected="true"
-                                        :custom-input-value-fn="form.customInputValueFn"
-                                        :custom-selected-fn="customSelectedFn"
-                                        style="width: 200px"
-                                        @confirm="confirmChooseMember"
-                                    >
-                                        <template #default="scope">
-                                            <span>
-                                                <el-input
-                                                    v-model="scope.data"
-                                                    placeholder="请选择"
-                                                    suffix-icon="el-icon-caret-bottom"
-                                                    readonly
-                                                />
-                                            </span>
-                                        </template>
-                                    </selectMember>
-                                    <!-- <calendarSelectMember
+                                    <calendarSelectMember
                                         input-placeholder="请选择"
                                         :write-back-selected-member-org="form.writeBackSelectedMemberOrg"
                                         :is-multiple-selected="true"
@@ -106,7 +85,7 @@
                                                 readonly
                                             />
                                         </template>
-                                    </calendarSelectMember> -->
+                                    </calendarSelectMember>
                                 </el-form-item>
                             </el-col>
                         </el-row>
@@ -117,28 +96,7 @@
                             筛选群主
                         </label>
                         <el-form-item label="成员筛选" prop="receive_group">
-                            <selectMember
-                                ref="addMemberDialogRef"
-                                input-placeholder="请选择企微成员"
-                                :is-group="taskData.touch_object == 'GROUP'"
-                                :is-multiple-selected="true"
-                                :custom-input-value-fn="form.customInputValueFn"
-                                :custom-selected-fn="customSelectedFn"
-                                style="width: 200px"
-                                @confirm="confirmChooseMember"
-                            >
-                                <template #default="scope">
-                                    <span>
-                                        <el-input
-                                            v-model="scope.data"
-                                            placeholder="请选择"
-                                            suffix-icon="el-icon-caret-bottom"
-                                            readonly
-                                        />
-                                    </span>
-                                </template>
-                            </selectMember>
-                            <!-- <calendarSelectMember
+                            <calendarSelectMember
                                 input-placeholder="请选择"
                                 :write-back-selected-member-org="form.writeBackSelectedMemberOrg"
                                 :is-multiple-selected="true"
@@ -156,7 +114,7 @@
                                         class="known"
                                     />
                                 </template>
-                            </calendarSelectMember> -->
+                            </calendarSelectMember>
                         </el-form-item>
                     </div>
                     <div v-if="taskData.touch_object == 'MOMENTS'">
@@ -166,8 +124,8 @@
                                 <el-radio label="0">全部</el-radio>
                             </el-radio-group>
                         </el-form-item>
-                        <el-row v-if="taskData.receive_type == '1'" :gutter="24">
-                            <el-col :span="12">
+                        <el-row v-if="taskData.receive_type == '1'">
+                            <el-col :span="11" class="mr24">
                                 <el-form-item label="标签筛选" prop="receive_group" @change="getTouchNum">
                                     <calendarSelect
                                         v-model="treeChecked"
@@ -175,7 +133,7 @@
                                     />
                                 </el-form-item>
                             </el-col>
-                            <el-col :span="12">
+                            <el-col :span="11">
                                 <el-form-item label="成员筛选" prop="receive_group">
                                     <calendarSelectMember
                                         :write-back-selected-member-org="form.writeBackSelectedMemberOrg"
@@ -322,7 +280,6 @@ const route = useRoute()
 const dialogIsTaskTabs = ref(false)
 const treeChecked = ref([])
 const selectList = ref([])
-const addMemberDialogRef = ref(null)
 // 切换目标对象
 const dialogIsSwitch = ref(false)
 // 页面初始化的时候刚点击目标对象不能出现弹窗
@@ -436,9 +393,6 @@ function confirmChooseMember(r) {
         r.map(ele => {
             select_members.push(ele.id)
         })
-    }
-    if (addMemberDialogRef.value) {
-        addMemberDialogRef.value.dialogVisible = false
     }
     if (route.query.type == 'edit' && !taskData.value.receive_group[0]) {
         taskData.value.receive_group.push({})

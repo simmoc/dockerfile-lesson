@@ -81,7 +81,7 @@ function getImageUrl(name) {
             }
             .icon {
                 width: 20px;
-                height: 20px;
+                hegiht:20px;
                 margin: 8px auto;
                 font-size: 24px;
             }

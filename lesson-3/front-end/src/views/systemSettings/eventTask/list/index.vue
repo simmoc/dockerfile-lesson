@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="search-form pb24">
+        <div class="search-form">
             <el-form :inline="true" class="flex flex-justify-between" :model="reacData.form" label-position="right" label-width="120px" size="small">
                 <el-form-item label="事件任务名称：" class="mb0">
                     <el-input
@@ -412,4 +412,9 @@ function headSearch() {
   min-height: calc(100vh - 105px);
 }
 
+.search-form {
+    padding: 24px;
+    background-color: #fff;
+    margin: 24px;
+}
 </style>

@@ -10,7 +10,6 @@ const route = [
             title: '客户',
             icon: 'member',
             parent: '客户',
-            activeMenu: '/customer',
             parentUrl: '/customer'
         },
         children: [
@@ -23,8 +22,7 @@ const route = [
                     iframeSrc:
                     '/tag_subject_user/list?token=' + window.localStorage.getItem('token'),
                     iframeName: '泛客户',
-                    icon: 'rectangle',
-                    activeMenu: '/customer/iframe/customer/user_list'
+                    icon: 'rectangle'
                 }
             },
             {
@@ -50,18 +48,6 @@ const route = [
                         }
                     }
                 ]
-            },
-            {
-                path: 'businessCustomer',
-                name: 'businessCustomer',
-                component: () => import('@/views/customer/customer/businessCustomer/businessCustomer.vue'),
-                meta: {
-                    title: '业务客户',
-                    parent: '客户',
-                    sidebar: true,
-                    icon: 'business',
-                    activeMenu: '/customer/businessCustomer'
-                }
             }
         ]
     },
@@ -88,7 +74,7 @@ const route = [
                     parent: '客户',
                     // parentUrl: '/customer',
                     sidebar: false,
-                    activeMenu: '/customerBase/index'
+                    activeMenu: '/customerBase'
                 },
                 children: [
                     {
@@ -98,7 +84,7 @@ const route = [
                         meta: {
                             title: '客户群详情页',
                             sidebar: false,
-                            activeMenu: '/customerBase/index'
+                            activeMenu: '/customerBase'
                         }
                     }
                 ]

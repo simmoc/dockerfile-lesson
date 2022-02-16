@@ -46,7 +46,6 @@
             <CustomerTable
                 ref="selectMemberTable"
                 :table-data="form.tableData"
-                :reserve-selection="true"
                 @handleSelect="selectionChange"
             >
                 <el-table-column type="selection" width="55" />
@@ -174,7 +173,6 @@ function handleDelete(obj) {
         if (item.id === obj.id) {
             form.selectedList.splice(index, 1)
             form.selectedIdList.splice(index, 1)
-            selectMemberTable.value.handleToggleRowSelection(obj, false)
         }
     })
     // 获取的数据不会同步关联dialog里面的数据

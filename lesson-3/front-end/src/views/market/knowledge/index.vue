@@ -473,6 +473,7 @@ const getGroupList = async cb => {
     if (cb) { cb() } else {
         treeDrag.value.handlerGroupKnowledge(groupList.value[0])
     }
+
 }
 const removeKeys = () => {
     knowledgeInfo.search_keyword_id_arr = searchKeysVal.value

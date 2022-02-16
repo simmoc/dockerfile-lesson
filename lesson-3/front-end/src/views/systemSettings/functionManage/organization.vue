@@ -3,17 +3,17 @@
         <div class="search-form">
             <div class="search-form-margin">
                 <el-form :inline="true" :model="form" label-position="right" label-width="120px" size="small">
-                    <el-form-item label="成员姓名：" @keyup.enter="onSearch(true)">
+                    <el-form-item label="成员姓名：" @keyup.enter="onSearch">
                         <el-input v-model="form.qw_name" placeholder="请输入成员姓名" style="width:274px;" />
                     </el-form-item>
-                    <el-form-item label="成员邮箱：" @keyup.enter="onSearch(true)">
+                    <el-form-item label="成员邮箱：" @keyup.enter="onSearch">
                         <el-input v-model="form.qw_email" placeholder="请输入成员邮箱" style="width:274px;" />
                     </el-form-item>
-                    <el-form-item label="成员手机号：" @keyup.enter="onSearch(true)">
+                    <el-form-item label="成员手机号：" @keyup.enter="onSearch">
                         <el-input v-model="form.qw_phone" placeholder="请输入成员手机号" style="width:274px;" />
                     </el-form-item>
                     <el-form-item label="角色：">
-                        <el-select v-model="form.role_id" placeholder="请选择" style="width:274px;" @change="onSearch(true)">
+                        <el-select v-model="form.role_id" placeholder="请选择" style="width:274px;" @change="onSearch">
                             <el-option label="全部" value="" />
                             <el-option v-for="item in checkAllList" :key="item.id"
                                        :label="item.label" :value="item.id"
@@ -21,7 +21,7 @@
                         </el-select>
                     </el-form-item>
                     <el-form-item label="状态：">
-                        <el-select v-model="form.qw_status" placeholder="请选择" style="width:274px;" @change="onSearch(true)">
+                        <el-select v-model="form.qw_status" placeholder="请选择" style="width:274px;" @change="onSearch">
                             <el-option label="全部" value="" />
                             <el-option label="已激活" value="1" />
                             <el-option label="已禁用" value="2" />
@@ -38,12 +38,12 @@
                             end-placeholder="结束时间"
                             value-format="YYYY-MM-DD"
                             prefix-icon="el-icon-time"
-                            @change="onSearch(true)"
+                            @change="onSearch"
                         />
                     </el-form-item>
                     <el-form-item>
                         <el-button type="default" @click="onReset">重置</el-button>
-                        <el-button type="primary" @click="onSearch(true)">查询</el-button>
+                        <el-button type="primary" @click="onSearch">查询</el-button>
                     </el-form-item>
                 </el-form>
             </div>
@@ -306,12 +306,13 @@ const onReset = () => {
 
 }
 const status = ref(true)
-const onSearch = async click => {
+const onSearch = () => {
 
-    await getSystemDepartments()
-    await getSystemMembers(click)
+    getSystemMembers()
+    getSystemDepartments()
 }
 const handleNodeClick = data => {
+    console.log(data)
     form.value.qw_department_id = data.qw_department_id
     getSystemMembers()
 }
@@ -333,14 +334,8 @@ const getData = () => {
         role_id
     }
 }
-const getSystemMembers = async click => {
+const getSystemMembers = async() => {
     let formData = getData()
-    // console.log('departments.value[0].qw_department_id', departments.value[0])
-    if (click && departments.value[0]) {
-        formData.qw_department_id = departments.value[0].qw_department_id
-    }
-    // if (departments.value[0].qw_department_id)
-    console.log('getSystemMembers', formData)
     let { data } = await Http.systemMembers(formData)
     tableData.value = data.list
     total.value = data.count
@@ -352,7 +347,6 @@ const getSystemDepartments = async() => {
         ...formData
     })
     departments.value = data
-    // console.log('departments.value', departments.value[0].qw_department_id)
     nextTick(() => {
         console.log(proxy.$refs.elTree)
         if (departments.value[0]) proxy.$refs.elTree.setCurrentKey(departments.value[0].id)
@@ -485,10 +479,8 @@ const showPopover = data => {
     systemRoles(data.roles)
 }
 
-onMounted(async() => {
-    await getSystemDepartments()
-    await getSystemMembers()
-})
+getSystemMembers()
+getSystemDepartments()
 </script>
 
 <style scoped lang="scss">

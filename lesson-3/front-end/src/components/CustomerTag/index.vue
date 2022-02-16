@@ -1,5 +1,5 @@
 <template>
-    <div class="block">
+    <div class="inline-block">
         <div
             class="customer-tag"
             :style="{ 'font-size': fontSize + 'px', ...customerStyle }"
@@ -9,7 +9,6 @@
             </div>
             <div class="tag-right" :style="{ 'background-color': color }">
                 <span
-                    :style="{ 'width': rightTitleWidth+'px' }"
                     :class="{
                         'tag-right-text': !rightTextAuto && !rightTextBreak,
                         'tag-right-text-wrap': !rightTextAuto && rightTextBreak,
@@ -37,9 +36,6 @@ const props = defineProps({
     rightTitle: {
         type: String,
         default: 'xxxx'
-    },
-    rightTitleWidth: {
-        type: Number
     },
     fontSize: {
         type: [String, Number],
@@ -107,10 +103,9 @@ const emits = defineEmits(['closeTag'])
         font-size: 12px;
         display: flex;
         margin-right: 8px;
-        /* margin-top: 5px; */
-        margin-bottom: 8px;
-        height: 20px;
-        line-height: 18px;
+        margin-top: 9px;
+        /* margin-bottom: 8px; */
+        line-height: 1.5;
     }
 
     .tag-left {
@@ -122,7 +117,6 @@ const emits = defineEmits(['closeTag'])
         border-top-left-radius: 2px;
         border-bottom-left-radius: 2px;
         max-width: 200px;
-        overflow: hidden;
         word-break: break-all;
     }
 
@@ -142,23 +136,20 @@ const emits = defineEmits(['closeTag'])
     }
     .tag-right-text {
         display: inline-block;
-        max-width: 130px;
+        max-width: 170px;
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
         vertical-align: middle;
-        text-align: center;
     }
     .tag-right-text-wrap {
         display: inline-block;
         max-width: 170px;
         word-break: break-all;
-        text-align: center;
     }
     .tag-right-text-auto {
         display: inline-block;
         max-width: 360px;
         white-space: nowrap;
-        text-align: center;
     }
 </style>

@@ -52,10 +52,11 @@ const Http = {}  // 包裹请求方法的容器
 // }
 // 拦截器的添加
 instance.interceptors.request.use(config => {
+
     // 发起请求前做些什么
     // CancelToken(config)
     let token = store.state.user.token
-    // let token = ''
+    // let token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NDA1LCJxd191c2VyaWQiOiJMaUJpbiIsInVzZXJuYW1lIjoi5p2O5b2sIiwiaWF0IjoxNjQyNjc3NDkzLCJleHAiOjE2NDI3NjM4OTN9.TipLekc_xhFaEC8lnEzK_uTacbTW2-f8NfRk-Qr45AE'
     if (token) {
         config.headers.token = token
     }

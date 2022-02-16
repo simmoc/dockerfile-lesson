@@ -192,18 +192,11 @@ function beforeUpload(file) {
     }
     const isTypeOk = props.ext.indexOf(fileExt) >= 0
     const isSizeOk = file.size / 1024 / 1024 < props.size
-    if (props.type == '图片') {
-        if (!isTypeOk) {
-            proxy.$message.error(`上传图片只支持 ${ props.ext.join(' / ') } 格式！`)
-        }
-        if (!isSizeOk) {
-            proxy.$message.error(`上传图片大小不能超过 ${props.size}MB！`)
-        }
+    if (!isTypeOk) {
+        proxy.$message.error(`上传图片只支持 ${ props.ext.join(' / ') } 格式！`)
     }
-    if (props.type == '视频') {
-        if (!isTypeOk) {
-            proxy.$message.error(`上传视频只支持 ${ props.ext.join(' / ') } 格式！`)
-        }
+    if (!isSizeOk) {
+        proxy.$message.error(`上传图片大小不能超过 ${props.size}MB！`)
     }
     if (isTypeOk && isSizeOk) {
         data.value.progress.preview = URL.createObjectURL(file)

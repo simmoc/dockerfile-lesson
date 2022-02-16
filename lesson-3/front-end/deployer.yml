@@ -2,7 +2,7 @@ version: 2
 default:
   build:
     - export PATH=$PATH:/data/node-v12.22.6-linux-x64/bin
-    - cnpm install
+    - cnpm install --unsafe-perm
     - npm run build:{{.Vars.env}}
   package:
     - FROM nginx:1.20.1

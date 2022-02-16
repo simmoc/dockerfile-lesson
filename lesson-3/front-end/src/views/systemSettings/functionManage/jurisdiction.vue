@@ -22,7 +22,6 @@
                             <selectMember
                                 ref="addMemberDialogRef"
                                 :write-back-selected-member-org="writeBackSelectedMemberOrg"
-                                :params="{'touch_object': 'ALL_MEMBER'}"
                                 @confirm="confirmChooseMember($event,scope.$index)"
                             >
                                 <template #default>

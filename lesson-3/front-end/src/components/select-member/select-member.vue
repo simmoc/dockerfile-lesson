@@ -20,7 +20,6 @@
             append-to-body
             lock-scroll
             custom-class="add-member-dialog"
-            :title="props.title"
         >
             <div class="add-member-dialog-main-wrap">
                 <el-tabs
@@ -37,14 +36,12 @@
                     >
                         <SelectMemberOrgTab
                             :ref="'member-org-tab-' + item.value"
-                            :is-group="props.isGroup"
                             :is-multiple-selected="props.isMultipleSelected"
                             :is-multiple-check-box="props.isMultipleCheckBox"
                             :param="{ type: item.value }"
                             :selected-member-org="reacData.selectedMemberOrg"
                             :dialog-visible="dialogVisible"
                             :custom-selected-fn="props.customSelectedFn"
-                            :params="props.params"
                         />
                     </el-tab-pane>
                 </el-tabs>
@@ -64,7 +61,7 @@
 
 <script setup>
 import Http from '@/util/request.js'
-import { getCurrentInstance, watch  } from 'vue'
+import { getCurrentInstance  } from 'vue'
 import SelectMemberOrgTab from './selectMemberOrgTab.vue'
 const props = defineProps({
     inputPlaceholder: {
@@ -95,19 +92,6 @@ const props = defineProps({
     // 用户使用默认input时，依据选中成员数组，生成回显汉字
     customInputValueFn: {
         type: Function
-    },
-    // 是否是选择群主
-    isGroup: {
-        type: Boolean,
-        default: () => false
-    },
-    title: {
-        type: String,
-        default: () => '选择成员'
-    },
-    params: {
-        type: Object,
-        default: () => ({})
     }
 })
 
@@ -122,14 +106,24 @@ const dialogVisible = ref(false)
 const emit = defineEmits(['confirm'])
 const { proxy } = getCurrentInstance()
 defineExpose({ dialogVisible, resetSelect })
-watch(() => props.writeBackSelectedMemberOrg, writeNew => {
-    if (writeNew) {
-        reacData.selectedMemberOrg = JSON.parse(JSON.stringify(writeNew))
-        if (props.customInputValueFn) {
-            reacData.inputValue = props.customInputValueFn(writeNew)
+watch(() => [reacData.activeTab, props.writeBackSelectedMemberOrg], ([activeTabNew, writeNew], [activeTabOld, writeOld]) => {
+    if (activeTabNew !== activeTabOld) {
+        // setTimeout(() => {
+        //     if (activeTabNew) {
+        //         reacData.selectedMemberOrg = JSON.parse(
+        //             JSON.stringify(proxy.$refs[`member-org-tab-${reacData.activeTabNew}`].selectedMembers)
+        //         )
+        //     }
+        // }, 300)
+    } else if (writeNew !== writeOld) {
+        if (writeNew) {
+            reacData.selectedMemberOrg = JSON.parse(JSON.stringify(writeNew))
+            if (props.customInputValueFn) {
+                reacData.inputValue = props.customInputValueFn(writeNew)
+            }
         }
     }
-}, { immediate: true, deep: true })
+})
 
 onMounted(async() => {
     await getHeadTypeArr()
@@ -147,24 +141,20 @@ function openMemberDialog() {
 // 取消选择（全部）
 function resetSelect() {
     reacData.inputValue = []
-    reacData.selectedMemberOrg = []
     emit('confirm', [])
 }
 function cancelChoose() {
     dialogVisible.value = false
-    // reacData.selectedMemberOrg = JSON.parse(
-    //     JSON.stringify(props.writeBackSelectedMemberOrg)
-    // )
+    reacData.selectedMemberOrg = JSON.parse(
+        JSON.stringify(props.writeBackSelectedMemberOrg)
+    )
 }
 function submitConfirmChooseMember() {
-    const child = proxy.$refs[`member-org-tab-${reacData.activeTab}`]
-    if (Object.prototype.toString.call(child) === '[object Object]') {
-        reacData.selectedMemberOrg = child.selectedMembers || []
-    } else {
-        reacData.selectedMemberOrg = child[0].selectedMembers || []
-    }
-    
+    reacData.selectedMemberOrg =
+        proxy.$refs[`member-org-tab-${reacData.activeTab}`].selectedMembers || []
     let param = JSON.parse(JSON.stringify(reacData.selectedMemberOrg))
+
+    console.log('显示值====', param)
 
     emit('confirm', param)
     // 用户input框 显示值

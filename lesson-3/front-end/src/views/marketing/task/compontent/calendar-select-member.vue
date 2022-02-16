@@ -11,7 +11,7 @@
             />
         </slot> -->
 
-        <div class="slot-box-pre-calendar" @click="openMemberDialog">
+        <div class="slot-box-pre" @click="openMemberDialog">
             <slot :data="reacData.inputValue" />
         </div>
 
@@ -20,7 +20,6 @@
             append-to-body
             lock-scroll
             custom-class="add-member-dialog"
-            :title="props.title"
         >
             <div class="add-member-dialog-main-wrap">
                 <el-tabs
@@ -43,7 +42,7 @@
                             :selected-member-org="reacData.selectedMemberOrg"
                             :dialog-visible="dialogVisible"
                             :custom-selected-fn="props.customSelectedFn"
-                            :touch-object="props.touchObject"
+                            :touch-object="touchObject"
                         />
                     </el-tab-pane>
                 </el-tabs>
@@ -98,10 +97,6 @@ const props = defineProps({
     // 筛选时必传参数
     touchObject: {
         type: String
-    },
-    title: {
-        type: String,
-        default: ''
     }
 })
 
@@ -210,7 +205,7 @@ function handleClickTabs() {}
 </script>
 <style lang="scss">
 @import url('./calendar-select-member.scss');
-.slot-box-pre-calendar {
-    min-width: 520px;
+.slot-box-pre {
+    width: 520px;
 }
 </style>

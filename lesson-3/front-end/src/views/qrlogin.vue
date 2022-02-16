@@ -71,21 +71,6 @@
                     </div>
                 </div>
                 <div class="qr-content">
-                    <div v-if="componyList && componyList.length > 1" class="compony-box flex flex-align-center mb12">
-                        <div class="c55flex-g0 flex-s0">选择企业：</div>
-                        <el-select 
-                            v-model="selectIndex"
-                            placeholder="请选择企业"
-                            class="width-class flex-g1 flex-s1"
-                            size="small"
-                            @change="ComponyChage"
-                        >
-                            <!-- <el-option label="事件" value="1" />
-                                    <el-option label="手写" value="2" />
-                                    <el-option label="其他" value="3" /> -->
-                            <el-option v-for="(item, index) in componyList" :key="index" :label="item.name" :value="index" />
-                        </el-select>
-                    </div>
                     <div class="fs18 fwb c0">
                         {{ admin?'企业微信扫码登录':'设置超级管理员' }}
                     </div>
@@ -121,55 +106,16 @@ const accomplishInitData = ref({})
 const admin_token = ref('')
 // 微信会随机重定向两次
 const redirectTime = ref(1)
-const selectCompony = ref({})
-const selectIndex = ref(0)
-const componyList = ref([])
-const loginParams = ref({})
-
 import { removeItem, setItem } from '@/util/storage'
 onMounted(() => {
     store.commit('user/removeMenus')
     removeItem('token')
 })
-
-const getComponyList = async() => {
-    try {
-        const { data } = await Http.getloginComponys()
-        componyList.value = data.list || []
-        selectIndex.value = 0
-        selectCompony.value = componyList.value[0]
-
-    } finally {
-        getLoginParam()
-    }
-}
-
-const ComponyChage = index => {
-    selectCompony.value = componyList.value[index - 0]
-    // 去除前一次登陆可能留下的参数
-    router.push({ query: {} })
-    
-    // console.log('选中下标', index, selectCompony.value)
-    getLoginParam()
-}
-
 const getLoginParam = async() => {
-    // let { data } = await Http.getLoginParam()
-    // param.value = data
-    if (selectCompony.value.agentid) {
-        param.value = selectCompony.value
-    } else {
-        let { data } = await Http.getLoginParam()
-        param.value = data
-    }
-    // console.log('选中公司', selectCompony.value.origin, param.value)
+    let { data } = await Http.getLoginParam()
+    param.value = data
     // TODO::zjm redirect_uri修改
     // let href = window.location.href
-    // 将配置参数注入登录参数
-    loginParams.value.appid = param.value.appid
-    loginParams.value.agentid = param.value.agentid
-    loginParams.value.type = param.value.type
-    
     let origin = window.location.origin
     new window.WwLogin({
         'id': 'wx_reg',
@@ -180,6 +126,8 @@ const getLoginParam = async() => {
         'href': origin + '/qrload.css',
         'lang': 'zh'
     })
+    console.log(data)
+
 }
 const initializeAdmin = async() => {
     let { data }  = await Http.initializeAdmin()
@@ -190,9 +138,8 @@ const accomplishInit = async() => {
     accomplishInitData.value = data
 }
 accomplishInit()
-// const qrLogin = async(code, state) => {
-const qrLogin = async params => {
-    let res = await Http.qrLogin(params, [], true)
+const qrLogin = async(code, state) => {
+    let res = await Http.qrLogin({ code, state }, [], true)
     // 每次都询问下是否设置过管理员
     let { data }  = await Http.initializeAdmin()
     // 每次都询问下是否完成初始化配置
@@ -220,9 +167,6 @@ const qrLogin = async params => {
             store.dispatch('user/getMenus').then(data => {
                 if (data.length === 0) {
                     ElMessage.error('暂无页面权限，请管理员配置权限')
-                    // 清除登录参数
-                    router.push({ query: {} })
-                    redirectTime.value = 1
                 } else {
                     ElMessage.success('登录成功')
                     store.dispatch('user/getSubjectName').then(() => {
@@ -232,10 +176,6 @@ const qrLogin = async params => {
 
             })
         }
-    } else { // 登录失败的其他情况
-        // 清除登录参数
-        router.push({ query: {} })
-        redirectTime.value = 1
     }
 }
 const getAdminToken = async() => {
@@ -265,11 +205,7 @@ const startInit = async() => {
 watch(route, to => {
     console.log('before', redirectTime.value)
     if (to.query.code && to.query.state && redirectTime.value == 1) {
-
-        loginParams.value.code = to.query.code
-        loginParams.value.state = to.query.state
-        qrLogin(loginParams.value)
-        
+        qrLogin(to.query.code, to.query.state)
         setItem('code', to.query.code)
         setItem('state', to.query.state)
         redirectTime.value++
@@ -277,8 +213,7 @@ watch(route, to => {
     }
 
 })
-getComponyList()
-// getLoginParam()
+getLoginParam()
 initializeAdmin()
 </script>
 
@@ -317,18 +252,12 @@ initializeAdmin()
     }
     .qr-content{
         margin-top: 22px;
-        // height: 460px;
-        height: 495px;
+        height: 460px;
         text-align: center;
         background-color: #fff;
         padding: 32px 44px;
         border-radius: 8px;
         box-shadow: 5px 10px 20px 0 rgba(4,46,109,0.33);
-
-        .compony-box {
-            box-sizing: border-box;
-            width: 282px;
-        }
 
     }
     .qr-code{

@@ -97,7 +97,7 @@
                                             :class="[item.is_subject ? 'clickable' : '']"
                                             @click="handleClickTh(item, scope.row)"
                                         >
-                                            {{ scope.row[item.field] || '—' }}
+                                            {{ scope.row[item.field] || '--' }}
                                             <!--  <br>{{ item.field}} -->
                                         </span>
                                     </template>
@@ -168,7 +168,7 @@ import { reactive } from 'vue-demi'
 import { useRoute } from 'vue-router'
 // const router = useRouter()
 function getImageUrl(url) {
-    return new URL(`../../../../assets/images/eventManage/${url}.svg`, import.meta.url).href
+    return new URL(`../../../../assets/images/eventManage/${url}.png`, import.meta.url).href
 }
 
 // const { proxy }  = getCurrentInstance()
@@ -208,7 +208,7 @@ function reset() {
     getTableData()
 }
 async function  handleClickTh(head, data) {
-    if (head.is_subject && data[head.field] && data[head.field] != '—') {
+    if (head.is_subject && data[head.field] && data[head.field] != '--') {
         getSnap(data.id, head.subject_id)
     }
 }

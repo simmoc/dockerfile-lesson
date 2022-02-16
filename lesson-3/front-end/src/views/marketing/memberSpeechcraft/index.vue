@@ -137,14 +137,140 @@
                             min-width="80px"
                         >
                             <template #default="scope">
-                                <div class="flex flex-align-center color-primary pointer">
-                                    <MenberItem 
-                                        class="table-member-card"
-                                        :member-id="scope.row.member_id" 
-                                        :avatar="scope.row.qw_avatar"
-                                        :name="scope.row.qw_name"
-                                        :department-name="scope.row.qw_department_name"
-                                    />
+                                <div class="flex flex-align-center">
+                                    <div class="icon-in-td">
+                                        <img
+                                            v-if="scope.row.qw_thumb_avatar"
+                                            :src="scope.row.qw_thumb_avatar"
+                                            :alt="scope.row.qw_thumb_avatar"
+                                        >
+                                    </div>
+                                    <el-popover
+                                        placement="right"
+                                        width="400"
+                                        trigger="click"
+                                        popper-class="member-info-pop"
+                                    >
+                                        <div class="member-info-header">
+                                            成员名片
+                                        </div>
+                                        <div class="member-info">
+                                            <img
+                                                :src="scope.row.qw_thumb_avatar"
+                                                class=""
+                                            >
+                                            <div class="">
+                                                <div>
+                                                    <span
+                                                        class="
+                                                                fs16
+                                                                fw400
+                                                                color-black
+                                                            "
+                                                    >
+                                                        {{ scope.row.qw_name }}
+                                                    </span>
+                                                    <i
+                                                        class="color-primary"
+                                                        :class="{
+                                                            'el-icon-male': scope.row.qw_gender == 1 || scope.row.qw_gender == 0,
+                                                            'el-icon-female': scope.row.qw_gender == 2
+                                                        }"
+                                                    />
+                                                    <el-tag
+                                                        v-if="scope.row.qw_position"
+                                                        type="success"
+                                                    >
+                                                        {{ scope.row.qw_position }}
+                                                    </el-tag>
+                                                </div>
+                                                <div class="pt-10 fs14">
+                                                    <span class="pr10">
+                                                        手机号：{{ scope.row.qw_phone }}
+                                                    </span>
+                                                    <i
+                                                        class="el-icon-document-copy"
+                                                        @click="copy(scope.row.qw_phone)"
+                                                    />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <ul>
+                                            <li
+                                                class="
+                                                        flex
+                                                        member-detail-li
+                                                    "
+                                            >
+                                                <div class="member-detail-left ">
+                                                    对外职务
+                                                </div>
+                                                <div class="member-detail-right">
+                                                    {{ scope.row.qw_external_position || "-" }}
+                                                </div>
+                                            </li>
+                                            <li
+                                                class="
+                                                        flex
+                                                        member-detail-li
+                                                    "
+                                            >
+                                                <div class="member-detail-left">
+                                                    所属部门
+                                                </div>
+                                                <div class="member-detail-right">
+                                                    {{ scope.row.qw_department_name || "-" }}
+                                                </div>
+                                            </li>
+                                            <li
+                                                class="
+                                                        flex
+                                                        member-detail-li
+                                                    "
+                                            >
+                                                <div class="member-detail-left">
+                                                    邮箱
+                                                </div>
+                                                <div class="member-detail-right">
+                                                    {{ scope.row.qw_email || "-" }}
+                                                </div>
+                                            </li>
+                                            <li
+                                                class="
+                                                        flex
+                                                        member-detail-li
+                                                    "
+                                            >
+                                                <div class="member-detail-left">
+                                                    座机
+                                                </div>
+                                                <div class="member-detail-right">
+                                                    {{ scope.row.qw_phone || "-" }}
+                                                </div>
+                                            </li>
+                                            <li
+                                                class="
+                                                        flex
+                                                        member-detail-li
+                                                    "
+                                            >
+                                                <div class="member-detail-left">
+                                                    地址
+                                                </div>
+                                                <div class="member-detail-right">
+                                                    {{ scope.row.qw_address || "-" }}
+                                                </div>
+                                            </li>
+                                        </ul>
+                                        <template #reference>
+                                            <span class="cl-blue member-name">
+                                                {{ scope.row.qw_name }} /
+                                                {{
+                                                    scope.row.qw_department_name
+                                                }}
+                                            </span>
+                                        </template>
+                                    </el-popover>
                                 </div>
                             </template>
                         </el-table-column>
@@ -278,6 +404,19 @@ const addMemberDialogRef = ref(null)
 onMounted(() => {
     getTableData()
 })
+function copy(data) {
+    let url = data
+    let oInput = document.createElement('input')
+    oInput.value = url
+    document.body.appendChild(oInput)
+    oInput.select() // 选择对象;
+    document.execCommand('Copy') // 执行浏览器复制命令
+    ElMessage({
+        message: '复制成功',
+        type: 'success'
+    })
+    oInput.remove()
+}
 function clickRadioItem(e) {
     e === form.search.search_send_num_type
         ? (form.search.search_send_num_type = '')

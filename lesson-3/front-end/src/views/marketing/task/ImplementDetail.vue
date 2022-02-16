@@ -60,27 +60,7 @@
                 </el-form-item>
                 <el-row>
                     <el-form-item label="成员筛选" prop="memberCheck">
-                        <selectMember
-                            ref="addMemberDialogRef"
-                            input-placeholder="请选择企微成员"
-                            :is-multiple-selected="true"
-                            :custom-input-value-fn="form.customInputValueFn"
-                            :custom-selected-fn="customSelectedFn"
-                            style="width: 200px"
-                            @confirm="confirmChooseMember"
-                        >
-                            <template #default="scope">
-                                <span>
-                                    <el-input
-                                        v-model="scope.data"
-                                        placeholder="请选择"
-                                        suffix-icon="el-icon-caret-bottom"
-                                        readonly
-                                    />
-                                </span>
-                            </template>
-                        </selectMember>
-                        <!-- <calendarSelectMember
+                        <calendarSelectMember
                             :write-back-selected-member-org="form.writeBackSelectedMemberOrg"
                             :is-multiple-selected="true"
                             :custom-input-value-fn="form.customInputValueFn"
@@ -95,7 +75,7 @@
                                     readonly
                                 />
                             </template>
-                        </calendarSelectMember> -->
+                        </calendarSelectMember>
                     </el-form-item>
                     <el-form-item label="状态搜索" prop="status" class="ml24">
                         <el-select v-model="form.formData.status" placeholder="请选择">
@@ -198,14 +178,140 @@
                 >
                     <el-table-column prop="group_name" label="成员名称">
                         <template #default="scope">
-                            <div class="flex flex-align-center event-list-page pointer">
-                                <MenberItem 
-                                    class="table-member-card"
-                                    :member-id="scope.row.member_id" 
-                                    :avatar="scope.row.qw_avatar"
-                                    :name="scope.row.qw_name"
-                                    :department-name="scope.row.department_name"
-                                />
+                            <div class="flex flex-align-center event-list-page">
+                                <div class="icon-in-td">
+                                    <img
+                                        v-if="scope.row.qw_thumb_avatar"
+                                        :src="scope.row.qw_thumb_avatar"
+                                        :alt="scope.row.qw_thumb_avatar"
+                                    >
+                                </div>
+                                <el-popover
+                                    placement="right"
+                                    width="400"
+                                    trigger="click"
+                                    popper-class="member-info-pop"
+                                >
+                                    <div class="member-info-header">
+                                        成员名片
+                                    </div>
+                                    <div class="member-info">
+                                        <img
+                                            :src="scope.row.qw_thumb_avatar"
+                                            class=""
+                                        >
+                                        <div class="">
+                                            <div>
+                                                <span
+                                                    class="
+                                                                    fs16
+                                                                    fw400
+                                                                    color-black
+                                                                "
+                                                >
+                                                    {{ scope.row.qw_name }}
+                                                </span>
+                                                <i
+                                                    class="color-primary"
+                                                    :class="{
+                                                        'el-icon-male': scope.row.qw_gender == 1 || scope.row.qw_gender == 0,
+                                                        'el-icon-female': scope.row.qw_gender == 2
+                                                    }"
+                                                />
+                                                <el-tag
+                                                    v-if="scope.row.qw_position"
+                                                    type="success"
+                                                >
+                                                    {{ scope.row.qw_position }}
+                                                </el-tag>
+                                            </div>
+                                            <div class="pt-10 fs14">
+                                                <span class="pr10">
+                                                    手机号：{{ scope.row.qw_phone }}
+                                                </span>
+                                                <i
+                                                    class="el-icon-document-copy"
+                                                    @click="copy(scope.row.qw_phone)"
+                                                />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <ul>
+                                        <li
+                                            class="
+                                                            flex
+                                                            member-detail-li
+                                                        "
+                                        >
+                                            <div class="member-detail-left ">
+                                                对外职务
+                                            </div>
+                                            <div class="member-detail-right">
+                                                {{ scope.row.qw_external_position || "-" }}
+                                            </div>
+                                        </li>
+                                        <li
+                                            class="
+                                                            flex
+                                                            member-detail-li
+                                                        "
+                                        >
+                                            <div class="member-detail-left">
+                                                所属部门
+                                            </div>
+                                            <div class="member-detail-right">
+                                                {{ scope.row.department_name || "-" }}
+                                            </div>
+                                        </li>
+                                        <li
+                                            class="
+                                                            flex
+                                                            member-detail-li
+                                                        "
+                                        >
+                                            <div class="member-detail-left">
+                                                邮箱
+                                            </div>
+                                            <div class="member-detail-right">
+                                                {{ scope.row.qw_email || "-" }}
+                                            </div>
+                                        </li>
+                                        <li
+                                            class="
+                                                            flex
+                                                            member-detail-li
+                                                        "
+                                        >
+                                            <div class="member-detail-left">
+                                                座机
+                                            </div>
+                                            <div class="member-detail-right">
+                                                {{ scope.row.qw_phone || "-" }}
+                                            </div>
+                                        </li>
+                                        <li
+                                            class="
+                                                            flex
+                                                            member-detail-li
+                                                        "
+                                        >
+                                            <div class="member-detail-left">
+                                                地址
+                                            </div>
+                                            <div class="member-detail-right">
+                                                {{ scope.row.qw_address || "-" }}
+                                            </div>
+                                        </li>
+                                    </ul>
+                                    <template #reference>
+                                        <span class="cl-blue member-name">
+                                            {{ scope.row.qw_name }} /
+                                            {{
+                                                scope.row.department_name
+                                            }}
+                                        </span>
+                                    </template>
+                                </el-popover>
                             </div>
                         </template>
                     </el-table-column>
@@ -290,7 +396,7 @@ import moment from 'moment'
 import { ElMessage } from 'element-plus'
 import { useRoute, useRouter } from 'vue-router'
 import http from '@/util/request'
-// import calendarSelectMember from './compontent/calendar-select-member.vue'
+import calendarSelectMember from './compontent/calendar-select-member.vue'
 import repeatTimeCheck from './compontent/repeatTimeCheck.vue'
 
 const route = useRoute()
@@ -301,7 +407,6 @@ const weekDate = ref('')
 const timeData = ref([])
 // 执行详情数据
 const implmentData = ref({})
-const addMemberDialogRef = ref(null)
 const form = reactive({
     writeBackSelectedMemberOrg: [],
     customInputValueFn: param => {
@@ -354,20 +459,23 @@ function customSelectedFn(data, len) {
     }
 }
 // popover 复制
-// function copy(data) {
-//     let url = data
-//     let oInput = document.createElement('input')
-//     oInput.value = url
-//     document.body.appendChild(oInput)
-//     oInput.select() // 选择对象;
-//     document.execCommand('Copy') // 执行浏览器复制命令
-//     ElMessage({
-//         message: '复制成功',
-//         type: 'success'
-//     })
-//     oInput.remove()
+function copy(data) {
+    let url = data
+    let oInput = document.createElement('input')
+    oInput.value = url
+    document.body.appendChild(oInput)
+    oInput.select() // 选择对象;
+    document.execCommand('Copy') // 执行浏览器复制命令
+    ElMessage({
+        message: '复制成功',
+        type: 'success'
+    })
+    oInput.remove()
+}
+// 获取切图
+// function getImageUrl(name) {
+//     return new URL(`../../../assets/images/calendarTask/${name}.svg`, import.meta.url).href
 // }
-
 // 请求详情数据
 const Implement = async id => {
     form.formData.id = id
@@ -409,9 +517,6 @@ const confirmChooseMember = r => {
         form.formData.member = member_id
         handleSearch()
     }
-    if (addMemberDialogRef.value) {
-        addMemberDialogRef.value.dialogVisible = false
-    }
 }
 // 重置
 const handleReset = () => {
@@ -419,7 +524,6 @@ const handleReset = () => {
     form.formData.page = 1
     form.formData.page_size = 10
     form.writeBackSelectedMemberOrg = []
-    addMemberDialogRef.value.resetSelect()
     Implement(route.query.id)
 }
 // 返回当前任务的任务详情

@@ -5,12 +5,8 @@ $--font-path: '/node_modules/element-plus/theme-chalk/fonts';
 $--el-button-background-color:#1773fa !important;
 $--el-border-radius-base:2px !important;
 $--el-font-weight-primary:400 !important;
-$--el-input-border-radius: 2px !important;
 :root {
     --el-color-primary: #1773fa;
-    // --el-input-border: 2px;
-    // --el-border-radius-base: 2px;
-    --el-border-color-base: #D9D9D9;
 }
 .el-button{
   font-weight: 400 !important;
@@ -32,16 +28,9 @@ $--el-input-border-radius: 2px !important;
     background-color: #fff;
     border-color: $--color-primary;
 }
-
 .el-button--text {
     color: $--color-primary;
   font-size: 12px;
-}
-.el-button--small span{
-  font-size: 14px;
-}
-.el-button--small {
-  padding: 8px 15px;
 }
 .el-table thead{
   color:$customer-title-color !important;
@@ -52,19 +41,6 @@ $--el-input-border-radius: 2px !important;
 }
 .el-table__cell{
   min-height: 54px !important;
-}
-
-/* 使表格兼容safari，不错位 */
-.el-table__body {
-  width: 100%;
-  table-layout: fixed !important;
-}
-
-.el-dialog {
-  margin-bottom: 10px;
-}
-.integel-page .el-dialog{
-  margin-bottom: 230px;
 }
 
 .el-dialog__headerbtn {
@@ -96,9 +72,7 @@ $--el-input-border-radius: 2px !important;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
   padding-right: 24px;
-  padding-left: 24px;
   padding-bottom: 10px;
-  background: #fff;
 }
 
 .el-dialog__footer > .dialog-footer button {
@@ -321,107 +295,6 @@ iframe{
 .page-scroll .el-form-item{
     margin-bottom: 24px;
 }
-
-// 客户详情
-.cusromer-detail-tab .el-tabs__header {
-  margin-bottom: 0;
-}
-
-// 订单管理
-.page-scroll .el-tabs__item {
-    font-size: 16px;
-    font-weight: 400;
-    color: rgba(0,0,0,0.65);
-    line-height: 24px;
-}
-.logistics-select .el-select {
-    width: 100%;
-}
-.el-tabs__item.is-active {
-  color: #1773FA;
-}
-.order-page .el-tabs__header {
-  margin-bottom: 0;
-}
-.order-page .el-tabs__item {
-  height: 36px;
-}
-.el-tabs__active-bar {
-  background-color: #1773FA;
-}
-.get-send-status .el-icon-success {
-    font-size: 32px;
-    color: #1773fa;
-}
-.time-line-height .el-timeline {
-    height: 228px;
-    overflow-y: scroll;
-}
-.time-line-box .el-timeline {
-    height: 158px;
-    overflow-y: scroll;
-}
-.tab-box .el-table thead{
-    max-height: 54px !important;
-}
-.el-dialog__body {
-    padding: 24px;
-}
-.dialog-class .el-dialog__title {
-    padding-left: 4px;
-}
-
-// 搜索时间选择框daterange类型全局设置
-.search-form .el-date-editor--daterange {
-    width: 274px;
-    .el-range-separator {
-        width: 8%;
-    }
-}
-.el-table__header-wrapper {
-    font-size: 14px;
-}
-.el-table__cell .cell {
-    font-size: 14px;
-}
-.el-table .cell {
-  padding-left: 16px;
-  padding-right: 4px;
-}
-.el-table::before {
-    content: none;
-}
-.el-dialog__header {
-    display: flex;
-    align-items: center;
-    padding: 16px 24px !important;
-    .el-dialog__title {
-        font-weight: 700;
-        font-size: 17px;
-    }
-}
-.el-button--text {
-    font-size: 14px;
-}
-.member-info-pop {
-    width: 436px !important;
-    padding: 0 !important;
-}
-.el-table__fixed-right {
-    box-shadow: 0 -5px 10px rgba(0, 0, 0, .12);
-}
-.addClass .el-dialog__body {
-    padding: 24px;
-}
-// .el-pagination .el-input__inner {
-//     height: 28px !important;
-// }
-
-// 客户动态时间轴样式
-.trend-list .el-timeline-item__tail {
-  left: 16px;
-  border-width: 3px;
-}
 .implement-list .el-table__body-wrapper {
     height: 400px;
     overflow-y: scroll;
@@ -433,15 +306,4 @@ iframe{
 }
 .task-status .el-icon-warning {
     color: #FAAD14;
-}
-// 客户详情 - 时间选择器中间的分隔符
-.customer-detail-page .el-range-editor--small .el-range-separator {
-  width: 20px;
-}
-
-.el-form-item__label {
-  padding-right: 0;
-}
-.el-form--inline .el-form-item {
-  margin-right: 24px;
 }

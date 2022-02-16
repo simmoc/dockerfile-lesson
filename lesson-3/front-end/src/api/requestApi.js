@@ -1,8 +1,4 @@
 const REQUEST_API = {
-    getloginComponys: { // 获取可登录企业列表
-        method: 'get',
-        url: '/operation/qw_qr_login_param_chain'
-    },
     // 登录
     loginIn: {
         method: 'post',
@@ -238,11 +234,6 @@ const REQUEST_API = {
         method: 'post',
         url: '/events/events_options'
     },
-    // 获取成员信息
-    getMemberData: {
-        method: 'post',
-        url: '/member/name_card'
-    },
 
     getLoginParam: {
         method: 'get',
@@ -313,22 +304,15 @@ const REQUEST_API = {
         method: 'post',
         url: '/operation_get_groupchat_member_list'
     },
-    // 获取手工任务成员列表
-    getOptionMemberList: {
-        method: 'post',
-        url: '/tasks_varied/get_option_member_list'
-    },
     // 获取群成员列表页群概览数据
     getGroupChatInfo: {
         method: 'post',
         url: '/operation_get_groupchat_overview'
     },
-    // 后端配置后返回路由权限
     getMenus: {
         method: 'get',
         url: '/menus'
     },
-    // 根据前端自定义，开发路由权限
     // getMenus: {
     //     method: 'get',
     //     url: '/menu/all_menus'
@@ -602,254 +586,8 @@ const REQUEST_API = {
     getTaskRepeatNum: {
         method: 'post',
         url: '/tasks_varied/get_task_num'
-    },
+    }
     // ------- end --------
 
-    // 商品管理模块-奥斯芬
-    getGoodsList: { // 商品列表
-        method: 'post',
-        url: '/oss/score_shop/get_goods_list'
-    },
-    updateGoods: { // 编辑商品
-        method: 'post',
-        url: '/oss/score_shop/update_goods'
-    },
-    getGoodsDetail: { // 商品详情
-        method: 'post',
-        url: '/oss/score_shop/get_goods_detail'
-    },
-    addGoods: { // 新增商品
-        method: 'post',
-        url: '/oss/score_shop/add_goods'
-    },
-    deleteGoods: { // 删除商品
-        method: 'post',
-        url: '/oss/score_shop/delete_goods'
-    },
-    updataGoodsStatus: { // 商品上下架
-        method: 'post',
-        url: '/oss/score_shop/update_goods_sale_status'
-    },
-    topGoodsSort: { // 商品移动到第一个
-        method: 'post',
-        url: '/oss/score_shop/update_goods_sort_top'
-    },
-    updateGoodsSort: { // 商品排序
-        method: 'post',
-        url: '/oss/score_shop/update_goods_sort'
-    },
-    getGoodsTypes: { // 商品类目列表
-        method: 'post',
-        url: '/oss/score_shop/get_goods_category_list'
-    },
-    addGoodsType: { // 添加商品类目
-        method: 'post',
-        url: '/oss/score_shop/add_goods_category'
-    },
-    editGoodsType: { // 编辑商品类目
-        method: 'post',
-        url: '/oss/score_shop/update_goods_category'
-    },
-    deleteGoodsType: { // 删除商品类目
-        method: 'post',
-        url: '/oss/score_shop/delete_goods_category'
-    },
-    editGoodsListSort: { // 更新商品类目排序
-        method: 'post',
-        url: '/oss/score_shop/update_goods_category_sort'
-    },
-    updateGoodsTypes: { // 更新商品类目(包括添加等)
-        method: 'post',
-        url: '/oss/score_shop/save_goods_category'
-    },
-    getGoodsCates: { // 获取商品分类列表
-        method: 'post',
-        url: '/oss/score_shop/get_goods_class_list'
-    },
-    editGoodsCate: { // 编辑商品分类列表
-        method: 'post',
-        url: '/oss/score_shop/update_goods_class_name'
-    },
-    adddGoodsCate: { // 添加商品分类
-        method: 'post',
-        url: '/oss/score_shop/add_goods_class'
-    },
-    deleteGoodsCate: { // 删除商品分类
-        method: 'post',
-        url: '/oss/score_shop/delete_goods_class'
-    },
-    updateGoodsCatesSort: { // 更新分类排序
-        method: 'post',
-        url: '/oss/score_shop/update_goods_class_sort'
-    },
-
-    // 订单管理模块-奥斯芬
-    getOrderNum: { // 获取快递订单统计
-        method: 'post',
-        url: '/oss/score_shop/get_logistics_order_total'
-    },
-    getOrderData: { // 获取快递订单列表
-        method: 'post',
-        url: '/oss/score_shop/get_logistics_order_list'
-    },
-    getOrderExpressCode: { // 获取快递公司编码
-        method: 'get',
-        url: '/oss/score_shop/get_express_code_list'
-    },
-    sendOrderGoods: { // 快递订单发货
-        method: 'post',
-        url: '/oss/score_shop/send_goods'
-    },
-    getCompleteOrder: { // 快递订单确认完成
-        method: 'post',
-        url: '/oss/score_shop/complete_order'
-    },
-    getOrderDetail: { // 获取快递订单详情
-        method: 'post',
-        url: '/oss/score_shop/get_logistics_order_detail'
-    },
-    // 客服管理模块===============
-    getSeviceList: { // 获取客服信息
-        method: 'get',
-        url: '/oss/score_shop/get_customer_service_data'
-    },
-    setSevice: { // 设置客服
-        method: 'post',
-        url: '/oss/score_shop/set_customer_service_code'
-    },
-    deleteSevice: { // 删除客服
-        method: 'post',
-        url: '/oss/score_shop/del_customer_service_code'
-    },
-    updateSevice: { // 更新客服
-        method: 'post',
-        url: '/oss/score_shop/update_customer_service_code'
-    },
-    // 成员活码
-    getmemberGroup: { // 获取成员活码分组
-        method: 'post',
-        url: '/oss/member_code/get_group_list'
-    },
-    getmemberList: { // 获取成员活码列表
-        method: 'post',
-        url: '/oss/member_code/get_code_list'
-    },
-    getOrderStoretotal: { // 获取到店订单统计
-        method: 'post',
-        url: '/oss/score_shop/get_arrival_order_total'
-    },
-    getOrderStorelist: { // 获取到店订单列表
-        method: 'post',
-        url: '/oss/score_shop/get_arrival_order_list'
-    },
-    getOrderStoreDetail: { // 获取到店订单详情
-        method: 'post',
-        url: '/oss/score_shop/get_arrival_order_detail'
-    },
-    getOrderStoreGoods: { // 获取分类&商品列表(订单管理使用)
-        method: 'post',
-        url: '/oss/score_shop/get_class_goods_list'
-    },
-
-    // 轮播图管理
-    getBannerList: { // 获取轮播图列表
-        method: 'get',
-        url: '/oss/score_shop/banner_list'
-    },
-    getBannertype: { // 获取轮播图类型
-        method: 'get',
-        url: '/oss/score_shop/banner_type'
-    },
-    updateBannerSort: { // 轮播图排序
-        method: 'post',
-        url: '/oss/score_shop/banner_sort'
-    },
-    // 积分管理
-    deleteBanner: { // 获取轮播图类型
-        method: 'post',
-        url: '/oss/score_shop/banner_del'
-    },
-    addBanner: { // 新增轮播图
-        method: 'post',
-        url: '/oss/score_shop/banner_add'
-    },
-    getBannerDetail: { // 获取轮播图详情
-        method: 'get',
-        url: '/oss/score_shop/banner_detail'
-    },
-    updateBannerEdit: { // 编辑轮播图
-        method: 'post',
-        url: '/oss/score_shop/banner_update'
-    },
-    // 积分规则
-    getIntegelTotal: { // 获取积分统计
-        method: 'get',
-        url: '/oss/score_shop/statistical_score'
-    },
-    getIntegelCommenList: { // 获取通用积分规则
-        method: 'get',
-        url: '/oss/score_shop/normal_rule_list'
-    },
-    getIntegelList: { // 获取活动规则列表
-        method: 'get',
-        url: '/oss/score_shop/activity_rule_list'
-    },
-    addIntegelRule: { // 添加积分规则
-        method: 'post',
-        url: '/oss/score_shop/add_activity_rule'
-    },
-    editIntegelRule: { // 编辑活动规则
-        method: 'post',
-        url: '/oss/score_shop/edit_activity_rule'
-    },
-    deleteIntegelRule: { // 删除活动规则
-        method: 'post',
-        url: '/oss/score_shop/del_activity_rule'
-    },
-    setBirthdayIntegelRule: { // 生日积分设置
-        method: 'post',
-        url: '/oss/score_shop/edit_normal_rule'
-    },
-    setIntegelRuleStatus: { // 设置活动状态
-        method: 'post',
-        url: '/oss/score_shop/activity_rule_status'
-    },
-    sortIntegelRules: { // 活动规则排序
-        method: 'post',
-        url: '/oss/score_shop/activity_rule_sort'
-    },
-    extensiveCustomerSubjectList: { // 主体实例列表
-        method: 'post',
-        url: '/extensive_customer/subject_list'
-    },
-    extensiveCustomerSearchFieldList: { // 主体实例列表-自定义字段列表
-        method: 'post',
-        url: '/extensive_customer/search_field_list'
-    },
-    // 主体客户相关接口
-    getSujectDetailTab: { // 请求客户详细详情顶部tab等
-        method: 'post',
-        url: '/extensive_customer/detail'
-    },
-    getSujectDetail: { // 请求客户详细详情
-        method: 'post',
-        url: '/extensive_customer/detail_user_info'
-    },
-    getSujectGroupInfo: { // 请求客户群相关信息
-        method: 'post',
-        url: '/extensive_customer/group_list'
-    },
-    getTrendstypes: { // 获取动态分组列表
-        method: 'post',
-        url: '/extensive_customer/get_type'
-    },
-    getTrendsList: { // 获取动态列表
-        method: 'post',
-        url: '/extensive_customer/dynamic_list'
-    },
-    getEventParams: { // 获取动态列表
-        method: 'post',
-        url: '/event/name_card'
-    }
 }
 export default REQUEST_API
