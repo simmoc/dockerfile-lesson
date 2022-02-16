@@ -1,7 +1,7 @@
 version: '3.8' # 表示该 Docker-Compose 文件使用的是 Version 3.8 file
 services:
   php-fpm:
-    image: php:7.4-fpm-alpine3.15
+    build: ./app
     ports:
       - "9000:9000"
     links:
@@ -9,15 +9,10 @@ services:
       - redis-db:redis-db
       - beanstalkd:beanstalkd
     volumes:
-      - ./app:/data/www:rw
-      - type: bind
-        source: ./app
-        target: /data/www
-      - ./env/config/php/php.ini:/usr/local/etc/php/php.ini:ro
+      - app-data:/var/www:rw
       - ./env/config/php/php-fpm.conf:/usr/local/etc/php-fpm.conf:ro
       - ./env/logs/php-fpm:/var/log/php-fpm:rw
     restart: always
-    command: php-fpm
   nginx:
     image: nginx:latest
     depends_on:
@@ -25,7 +20,7 @@ services:
     links:
       - php-fpm:php-fpm
     volumes:
-      - app-data:/data/www:rw
+      - app-data:/var/www:rw
       - ./env/config/nginx/conf.d:/etc/nginx/conf.d:ro
 #      - ./env/config/nginx/nginx.conf:/etc/nginx/nginx.conf:ro
       - ./env/logs/nginx:/var/log/nginx
@@ -69,3 +64,6 @@ volumes:
   app-data: {}
   beanstalkd-data: {}
   log-data: {}
+networks:
+  back-end:
+    external: true

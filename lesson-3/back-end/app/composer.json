@@ -1,0 +1,11 @@
+{
+    "name": "simmoc/api_frame",
+    "description": "api frame",
+    "authors": [
+        {
+            "name": "simmoc",
+            "email": "305156251@qq.com"
+        }
+    ],
+    "require": {}
+}
